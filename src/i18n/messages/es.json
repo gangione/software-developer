@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "title": "Gabriel Angione — Desarrollador de Software",
+    "description": "Desarrollador de Software especializado en .NET, React y desarrollo con IA. Fundador de Track Signe. Construyendo soluciones escalables con arquitectura limpia."
+  },
+  "nav": {
+    "about": "Sobre mí",
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "techStack": "Tecnologías",
+    "education": "Educación",
+    "blog": "Blog",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "name": "Gabriel Angione",
+    "role": "Desarrollador de Software",
+    "tagline": "Construyendo el futuro de las organizaciones a través del código, la arquitectura y la innovación con IA.",
+    "cta": {
+      "projects": "Ver Proyectos",
+      "contact": "Contacto"
+    }
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "subtitle": "El camino del conocimiento",
+    "p1": "Soy un Desarrollador de Software de Buenos Aires, Argentina, con casi una década de experiencia abarcando todo el espectro IT — desde soporte técnico y administración de sistemas hasta ingeniería de redes y desarrollo full-stack.",
+    "p2": "Actualmente en Tec Solutions, diseño y construyo Web APIs con C# .NET, aplicando principios de arquitectura limpia (DDD, MVC, BFF) y patrones de diseño (CQRS, Mediator, Builder). Trabajo en todo el stack con Angular, React, Node.js, Laravel, y gestiono bases de datos relacionales incluyendo MySQL, Oracle y PostgreSQL.",
+    "p3": "Soy el fundador de Track Signe, una plataforma SaaS para verificación y seguimiento inteligente en vía pública usando códigos QR, geolocalización y evidencia fotográfica.",
+    "p4": "Mi enfoque actual es el desarrollo impulsado por IA — aprovechando agentes de IA en flujos DDD/SDD, experimentando con herramientas MCP y construyendo interfaces de usuario integradas con IA para máxima eficiencia.",
+    "highlight": {
+      "years": "9+",
+      "yearsLabel": "Años de Experiencia",
+      "projects": "20+",
+      "projectsLabel": "Proyectos Entregados",
+      "roles": "4",
+      "rolesLabel": "Evoluciones de Carrera"
+    }
+  },
+  "experience": {
+    "title": "Experiencia",
+    "subtitle": "Una carrera construida sobre evolución continua",
+    "present": "Presente",
+    "roles": {
+      "tecSolutions": {
+        "title": "Desarrollador de Software",
+        "company": "Tec Solutions",
+        "period": "Ene 2023 — Presente",
+        "description": "Desarrollo de Web APIs con C# .NET con énfasis en Backend aplicando buenas prácticas para códigos con una arquitectura limpia y escalable (DDD, MVC, BFF) e implementación de patrones de diseño creacionales y de comportamiento (Singleton, Builder, CQRS, Mediator). Manejo de bases de datos relacionales: MySQL, Oracle, PostgreSQL. Creación de test unitarios con NUnit. Mantenimiento y desarrollo de nuevas funcionalidades en Angular, Laravel, React, NodeJS, Express y WebSockets. Dockerización de nuevos desarrollos y proyectos existentes.",
+        "tags": [
+          "C#/.NET",
+          "React",
+          "Angular",
+          "Node.js",
+          "Laravel",
+          "Docker",
+          "PostgreSQL",
+          "Oracle"
+        ]
+      },
+      "caucionesDev": {
+        "title": "Analista Programador",
+        "company": "Aseguradores de Cauciones",
+        "period": "Sep 2020 — Ene 2023",
+        "description": "Lideré el equipo de desarrollo de Cauciones Digital (Angular y Laravel), una herramienta para productores asesores de seguros y asegurados, la cual mejoró los procesos de solicitud de pólizas, gestión de carteras de clientes y comisiones. Desarrollo de APIs REST con C# y Laravel, MVCs internos con PHP y landing pages en WordPress. Análisis de requerimientos y desarrollo de funcionalidades para el ERP con Visual Basic y Stored Procedures en SQL Server.",
+        "tags": [
+          "Angular",
+          "Laravel",
+          "C#",
+          "SQL Server",
+          "WordPress",
+          "Visual Basic"
+        ]
+      },
+      "caucionesAdmin": {
+        "title": "Administrador de Sistemas",
+        "company": "Aseguradores de Cauciones",
+        "period": "Sep 2017 — Sep 2020",
+        "description": "A cargo de la mudanza del Datacenter, la cual implicó la migración de los equipos de red, modificar la arquitectura de la red lógica, migración de servicios de conectividad (MPLS) de terceros a túneles VPN site-to-site con agencias en el interior del país. Migración a un entorno híbrido, implementando Virtual Machines, App Services y SQL Databases en Azure, logrando una mejor performance y disminuyendo los costos.",
+        "tags": [
+          "Azure",
+          "VMware",
+          "Cisco",
+          "Fortinet",
+          "VPN",
+          "Active Directory"
+        ]
+      },
+      "caucionesSupport": {
+        "title": "Soporte Técnico",
+        "company": "Aseguradores de Cauciones",
+        "period": "Sep 2016 — Sep 2017",
+        "description": "Como pasante de soporte a usuarios internos, logré un gran desarrollo de habilidades blandas y técnicas (Windows, Linux, Active Directory y Office 365) las cuales me hicieron destacar para ser empleado efectivo de la compañía.",
+        "tags": ["Windows", "Linux", "Active Directory", "Office 365"]
+      }
+    }
+  },
+  "projects": {
+    "title": "Proyectos más relevantes",
+    "subtitle": "Del concepto a producción",
+    "viewProject": "Ver Proyecto",
+    "viewCode": "Ver Código",
+    "inDevelopment": "En Desarrollo",
+    "founder": "Fundador",
+    "techLead": "Tech Lead",
+    "developer": "Desarrollador",
+    "items": {
+      "trackSigne": {
+        "title": "Track Signe",
+        "role": "Fundador y Desarrollador Principal",
+        "description": "Plataforma SaaS para el registro y verificación inteligente en vía pública. Incluye una app móvil con escaneo QR, geolocalización y evidencia fotográfica, más un panel web completo para gestión de campañas con dashboards en tiempo real, mapas interactivos y reportes automatizados. Multi-industria: publicidad exterior, siniestros de seguros y gestión municipal.",
+        "tags": [
+          ".NET",
+          "Angular",
+          "React-Native",
+          "PostgreSQL",
+          "Docker",
+          "Azure",
+          "QR/GPS"
+        ]
+      },
+      "caucionesDigital": {
+        "title": "Cauciones Digital",
+        "role": "Tech Lead",
+        "description": "Plataforma digital para productores asesores de seguros y asegurados de Aseguradores de Cauciones. Optimizó los procesos de solicitud de pólizas, gestión de carteras de clientes y seguimiento de comisiones. Lideré el equipo completo de desarrollo.",
+        "tags": ["Angular", "Laravel", "SQL Server", "REST API", "Azure"]
+      },
+      "ggmFitness": {
+        "title": "GGM Fitness",
+        "role": "Fundador y Desarrollador",
+        "description": "Plataforma tecnológica para un centro de entrenamiento de calistenia en Ciudadela. Innovando en todos los aspectos y modelos de negocio del fitness con soluciones tecnológicas integradas. Actualmente en desarrollo activo.",
+        "tags": [
+          "Angular",
+          "Node.js",
+          "Express",
+          "Google Cloud Platform",
+          "PostgreSQL"
+        ]
+      },
+      "pampazon": {
+        "title": "Pampazon",
+        "role": "Desarrollador",
+        "description": "Proyecto académico en la UBA — sistema de gestión de depósitos y logística construido con C# con gestión de almacenes, módulo de operaciones y validación de casos de prueba.",
+        "tags": ["C#", "WinForms", ".NET"]
+      }
+    }
+  },
+  "techStack": {
+    "title": "Tecnologías",
+    "subtitle": "Herramientas del oficio",
+    "categories": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "databases": "Bases de Datos",
+      "infrastructure": "Infraestructura",
+      "ai": "IA e Innovación",
+      "networking": "Redes"
+    }
+  },
+  "education": {
+    "title": "Educación",
+    "subtitle": "La base del conocimiento",
+    "items": {
+      "uba": {
+        "title": "Licenciatura en Sistemas de Información de las Organizaciones",
+        "institution": "Universidad de Buenos Aires — Facultad de Ciencias Económicas",
+        "period": "2015 — Presente",
+        "status": "Estudiante avanzado — 10 materias restantes",
+        "description": "Programa integral que abarca ingeniería de software, bases de datos, redes, seguridad informática, gestión de proyectos, contabilidad, economía y sistemas organizacionales."
+      },
+      "bachiller": {
+        "title": "Bachiller en Economía y Administración",
+        "institution": "Juan B. Lasalle",
+        "period": "Egresado 2014",
+        "status": "Completado",
+        "description": "Formación en economía, administración de empresas y principios contables."
+      },
+      "udemy": {
+        "title": "Certificación Master en PHP, SQL, POO, MVC, Laravel, Symfony y WordPress",
+        "institution": "Udemy",
+        "period": "2022",
+        "status": "Certificado",
+        "description": "Formación integral full-stack desde cero hasta nivel avanzado. Dominio de PHP con programación orientada a objetos y patrón MVC. Bases de datos relacionales con SQL y MySQL. Desarrollo de aplicaciones web completas. Maquetación web y buenas prácticas."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Pensamientos, ideas y conocimiento compartido",
+    "readMore": "Leer Más",
+    "readTime": "min de lectura",
+    "allPosts": "Todos los Posts",
+    "noPosts": "Aún no hay publicaciones. ¡Pronto habrá contenido!"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Construyamos algo juntos",
+    "description": "Siempre estoy abierto a discutir nuevos proyectos, ideas creativas u oportunidades para ser parte de algo grande.",
+    "email": "Email",
+    "location": "Buenos Aires, Argentina",
+    "socialLinks": "Encontrame en"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "builtWith": "Construido con Next.js, Three.js y pasión por el conocimiento"
+  }
+}

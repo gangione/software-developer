@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "title": "Gabriel Angione — Software Developer",
+    "description": "Software Developer specializing in .NET, React, and AI-driven development. Founder of Track Signe. Building scalable solutions with clean architecture."
+  },
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "techStack": "Tech Stack",
+    "education": "Education",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Gabriel Angione",
+    "role": "Software Developer",
+    "tagline": "Building the future of organizations through code, architecture, and AI-driven innovation.",
+    "cta": {
+      "projects": "View Projects",
+      "contact": "Get in Touch"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "The journey of knowledge",
+    "p1": "I'm a Software Developer from Buenos Aires, Argentina, with nearly a decade of experience spanning the entire IT spectrum — from tech support and systems administration to network engineering and full-stack development.",
+    "p2": "Currently at Tec Solutions, I architect and build Web APIs with C# .NET, applying clean architecture principles (DDD, MVC, BFF) and design patterns (CQRS, Mediator, Builder). I work across the full stack with Angular, React, Node.js, Laravel, and manage relational databases including MySQL, Oracle, and PostgreSQL.",
+    "p3": "I'm the founder of Track Signe, a SaaS platform for intelligent verification and tracking in public spaces using QR codes, geolocation, and photographic evidence.",
+    "p4": "My current focus is AI-driven development — leveraging AI agents in DDD/SDD workflows, experimenting with MCP tools, and building AI-integrated user interfaces for maximum efficiency.",
+    "highlight": {
+      "years": "9+",
+      "yearsLabel": "Years of Experience",
+      "projects": "20+",
+      "projectsLabel": "Projects Delivered",
+      "roles": "4",
+      "rolesLabel": "Career Evolutions"
+    }
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "A career built on continuous evolution",
+    "present": "Present",
+    "roles": {
+      "tecSolutions": {
+        "title": "Software Developer",
+        "company": "Tec Solutions",
+        "period": "Jan 2023 — Present",
+        "description": "Development of Web APIs with C# .NET with emphasis on Backend, applying best practices for clean and scalable architecture (DDD, MVC, BFF) and implementation of creational and behavioral design patterns (Singleton, Builder, CQRS, Mediator). Management of relational databases: MySQL, Oracle, PostgreSQL. Unit testing with NUnit. Maintenance and development of new features in Angular, Laravel, React, Node.js, Express and WebSockets. Dockerization of new and existing projects.",
+        "tags": [
+          "C#/.NET",
+          "React",
+          "Angular",
+          "Node.js",
+          "Laravel",
+          "Docker",
+          "PostgreSQL",
+          "Oracle"
+        ]
+      },
+      "caucionesDev": {
+        "title": "Programmer Analyst",
+        "company": "Aseguradores de Cauciones",
+        "period": "Sep 2020 — Jan 2023",
+        "description": "Led the development team of Cauciones Digital (Angular & Laravel), a tool for insurance brokers and policyholders that improved policy request processes, client portfolio management, and commissions. Built REST APIs with C# and Laravel, internal MVCs with PHP, and WordPress landing pages. Requirements analysis and ERP development with Visual Basic and SQL Server Stored Procedures.",
+        "tags": [
+          "Angular",
+          "Laravel",
+          "C#",
+          "SQL Server",
+          "WordPress",
+          "Visual Basic"
+        ]
+      },
+      "caucionesAdmin": {
+        "title": "Systems Administrator",
+        "company": "Aseguradores de Cauciones",
+        "period": "Sep 2017 — Sep 2020",
+        "description": "Led the datacenter migration, including network equipment migration, logical network architecture redesign, and migration from third-party MPLS connectivity to VPN site-to-site tunnels with agencies across Argentina. Migrated to a hybrid environment implementing Virtual Machines, App Services, and SQL Databases in Azure, achieving better performance and reduced costs.",
+        "tags": [
+          "Azure",
+          "VMware",
+          "Cisco",
+          "Fortinet",
+          "VPN",
+          "Active Directory"
+        ]
+      },
+      "caucionesSupport": {
+        "title": "Tech Support",
+        "company": "Aseguradores de Cauciones",
+        "period": "Sep 2016 — Sep 2017",
+        "description": "Internal user support intern, developing strong soft skills and technical abilities (Windows, Linux, Active Directory, Office 365) which led to being hired as a full-time employee.",
+        "tags": ["Windows", "Linux", "Active Directory", "Office 365"]
+      }
+    }
+  },
+  "projects": {
+    "title": "Projects most relevant",
+    "subtitle": "From concept to production",
+    "viewProject": "View Project",
+    "viewCode": "View Code",
+    "inDevelopment": "In Development",
+    "founder": "Founder",
+    "techLead": "Tech Lead",
+    "developer": "Developer",
+    "items": {
+      "trackSigne": {
+        "title": "Track Signe",
+        "role": "Founder & Lead Developer",
+        "description": "SaaS platform for intelligent registration and verification in public spaces. Features a mobile app with QR scanning, geolocation, and photographic evidence, plus a complete web panel for campaign management with real-time dashboards, interactive maps, and automated reports. Multi-industry: outdoor advertising, insurance claims, and municipal management.",
+        "tags": [
+          ".NET",
+          "Angular",
+          "React-Native",
+          "PostgreSQL",
+          "Docker",
+          "Azure",
+          "QR/GPS"
+        ]
+      },
+      "caucionesDigital": {
+        "title": "Cauciones Digital",
+        "role": "Tech Lead",
+        "description": "Digital platform for insurance brokers and policyholders at Aseguradores de Cauciones. Streamlined policy requests, client portfolio management, and commission tracking. Led the full development team.",
+        "tags": ["Angular", "Laravel", "SQL Server", "REST API", "Azure"]
+      },
+      "ggmFitness": {
+        "title": "GGM Fitness",
+        "role": "Founder & Developer",
+        "description": "Technology platform for a calisthenics training center in Ciudadela. Innovating across all aspects and business models of fitness with integrated tech solutions. Currently in active development.",
+        "tags": [
+          "Angular",
+          "Node.js",
+          "Express",
+          "Google Cloud Platform",
+          "PostgreSQL"
+        ]
+      },
+      "pampazon": {
+        "title": "Pampazon",
+        "role": "Developer",
+        "description": "Academic project at UBA — a warehouse and logistics management system built with C# featuring deposit management, operations module, and test case validation.",
+        "tags": ["C#", "WinForms", ".NET"]
+      }
+    }
+  },
+  "techStack": {
+    "title": "Tech Stack",
+    "subtitle": "Tools of the trade",
+    "categories": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "databases": "Databases",
+      "infrastructure": "Infrastructure",
+      "ai": "AI & Innovation",
+      "networking": "Networking"
+    }
+  },
+  "education": {
+    "title": "Education",
+    "subtitle": "Foundation of knowledge",
+    "items": {
+      "uba": {
+        "title": "BSc in Information Systems of Organizations",
+        "institution": "University of Buenos Aires — Faculty of Economic Sciences",
+        "period": "2015 — Present",
+        "status": "Advanced student — 10 subjects remaining",
+        "description": "Comprehensive program covering software engineering, databases, networks, information security, project management, accounting, economics, and organizational systems."
+      },
+      "bachiller": {
+        "title": "High School Diploma in Economics & Administration",
+        "institution": "Juan B. Lasalle",
+        "period": "Graduated 2014",
+        "status": "Completed",
+        "description": "Foundation in economics, business administration, and accounting principles."
+      },
+      "udemy": {
+        "title": "Master Certification in PHP, SQL, OOP, MVC, Laravel, Symfony & WordPress",
+        "institution": "Udemy",
+        "period": "2022",
+        "status": "Certified",
+        "description": "Comprehensive full-stack training from zero to advanced level. Mastery of PHP with object-oriented programming and MVC pattern. Relational databases with SQL and MySQL. Development of complete web applications. Web layout and best practices."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Thoughts, insights, and knowledge sharing",
+    "readMore": "Read More",
+    "readTime": "min read",
+    "allPosts": "All Posts",
+    "noPosts": "No posts yet. Stay tuned!"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's build something together",
+    "description": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of something great.",
+    "email": "Email",
+    "location": "Buenos Aires, Argentina",
+    "socialLinks": "Find me on"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js, Three.js & passion for knowledge"
+  }
+}
