@@ -26,7 +26,7 @@ export default function About() {
 
       <div className="grid lg:grid-cols-5 gap-12 items-start">
         {/* Text content */}
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-3 space-y-6 p-6 rounded-2xl bg-surface/50 border border-white/5 backdrop-blur-sm">
           {/* Profile photo — coin flip between caricature and real photo */}
           <div
             className="flex justify-center mb-6 lg:float-right lg:ml-6 lg:mb-4"

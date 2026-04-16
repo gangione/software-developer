@@ -7,6 +7,10 @@ import { routing } from "@/i18n/routing";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
@@ -76,11 +80,20 @@ export async function generateMetadata({
       siteName: "Gabriel Angione",
       type: "website",
       locale: locale === "es" ? "es_AR" : "en_US",
+      images: [
+        {
+          url: `${baseUrl}/images/avatar.png`,
+          width: 512,
+          height: 512,
+          alt: "Gabriel Angione",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`${baseUrl}/images/avatar.png`],
     },
   };
 }
