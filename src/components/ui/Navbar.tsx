@@ -8,13 +8,13 @@ import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 const anchorItems = [
-  { key: "about", href: "#about" },
-  { key: "thinking", href: "#thinking" },
-  { key: "experience", href: "#experience" },
-  { key: "projects", href: "#projects" },
-  { key: "techStack", href: "#tech-stack" },
-  { key: "education", href: "#education" },
-  { key: "contact", href: "#contact" },
+  { key: "about", href: "/#about" },
+  { key: "thinking", href: "/#thinking" },
+  { key: "experience", href: "/#experience" },
+  { key: "projects", href: "/#projects" },
+  { key: "techStack", href: "/#tech-stack" },
+  { key: "education", href: "/#education" },
+  { key: "contact", href: "/#contact" },
 ];
 
 // const routeItems = [
@@ -46,7 +46,7 @@ export default function Navbar() {
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <a href="#" className="group flex items-center gap-2">
+          <Link href="/" className="group flex items-center gap-2">
             <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
               <Image
                 src="/images/avatar.png"
@@ -60,18 +60,18 @@ export default function Navbar() {
             <span className="sm:block text-sm text-muted group-hover:text-foreground transition-colors">
               gangione.dev
             </span>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">
             {anchorItems.map(({ key, href }) => (
-              <a
+              <Link
                 key={key}
                 href={href}
                 className="px-3 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/5"
               >
                 {t(key)}
-              </a>
+              </Link>
             ))}
             {/* {routeItems.map(({ key, href }) => (
               <Link
@@ -126,14 +126,14 @@ export default function Navbar() {
           >
             <div className="px-4 py-4 space-y-1">
               {anchorItems.map(({ key, href }) => (
-                <a
+                <Link
                   key={key}
                   href={href}
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2 text-sm text-muted hover:text-foreground rounded-lg hover:bg-white/5"
                 >
                   {t(key)}
-                </a>
+                </Link>
               ))}
               {/* {routeItems.map(({ key, href }) => (
                 <Link
