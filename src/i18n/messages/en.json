@@ -288,14 +288,14 @@
         }
       },
       "caucionesDigital": {
-        "headline": "Modernizing insurance brokerage operations at scale",
+        "headline": "Modernizing insurance brokers operations at scale",
         "problem": {
           "title": "The Problem",
           "content": "Insurance brokers managed policy requests, client portfolios, and commissions through a fragmented mix of spreadsheets and legacy systems. The process was slow, error-prone, and impossible to scale."
         },
         "solution": {
           "title": "The Solution",
-          "content": "Cauciones Digital is a full-featured web platform that digitizes and automates the entire brokerage workflow. Built with Angular on the frontend and Laravel/C# APIs on the backend, integrated with the company's ERP system."
+          "content": "Cauciones Digital is a full-featured web platform that digitizes and automates the entire workflow for PAS and Brokers. Built with Angular on the frontend and Laravel/C# APIs on the backend, integrated with the company's ERP system."
         },
         "architecture": {
           "title": "Architecture",

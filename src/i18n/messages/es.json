@@ -287,14 +287,14 @@
         }
       },
       "caucionesDigital": {
-        "headline": "Modernizando operaciones de corretaje de seguros a escala",
+        "headline": "Modernizando operaciones de Productores y Brokers de seguros a escala",
         "problem": {
           "title": "El Problema",
           "content": "Los productores de seguros gestionaban solicitudes de pólizas, carteras de clientes y comisiones con una mezcla fragmentada de planillas y sistemas heredados. El proceso era lento, propenso a errores e imposible de escalar."
         },
         "solution": {
           "title": "La Solución",
-          "content": "Cauciones Digital es una plataforma web completa que digitaliza y automatiza todo el flujo de trabajo del corretaje. Construida con Angular en el frontend y APIs Laravel/C# en el backend, integrada con el sistema ERP de la empresa."
+          "content": "Cauciones Digital es una plataforma web completa que digitaliza y automatiza todo el flujo de trabajo de los PAS y Brokers. Construida con Angular en el frontend y APIs Laravel/C# en el backend, integrada con el sistema ERP de la empresa."
         },
         "architecture": {
           "title": "Arquitectura",
