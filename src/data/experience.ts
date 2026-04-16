@@ -1,8 +1,15 @@
 export const experiences = [
   {
-    key: "tecSolutions",
-    startYear: 2023,
+    key: "tecSolutionsLead",
+    startYear: 2024,
     endYear: null,
+    companyUrl: "https://tecsolutions.com.ar/",
+    icon: "lead",
+  },
+  {
+    key: "tecSolutionsDev",
+    startYear: 2023,
+    endYear: 2024,
     companyUrl: "https://tecsolutions.com.ar/",
     icon: "code",
   },
