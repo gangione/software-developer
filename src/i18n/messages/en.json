@@ -1,10 +1,11 @@
 {
   "metadata": {
-    "title": "Gabriel Angione — Software Developer",
-    "description": "Software Developer specializing in .NET, React, and AI-driven development. Founder of Track Signe. Building scalable solutions with clean architecture."
+    "title": "Gabriel Angione — Software Architect & Builder",
+    "description": "Software Architect specializing in .NET, DDD, CQRS, and AI-driven development. Founder of Track Signe. Building scalable, knowledge-driven systems."
   },
   "nav": {
     "about": "About",
+    "thinking": "How I Think",
     "experience": "Experience",
     "projects": "Projects",
     "techStack": "Tech Stack",
@@ -15,8 +16,8 @@
   "hero": {
     "greeting": "Hi, I'm",
     "name": "Gabriel Angione",
-    "role": "Software Developer",
-    "tagline": "Building the future of organizations through code, architecture, and AI-driven innovation.",
+    "role": "Software Architect & Builder",
+    "tagline": "I design systems, not just software. I build knowledge into scalable architecture and AI-driven products.",
     "cta": {
       "projects": "View Projects",
       "contact": "Get in Touch"
@@ -25,7 +26,7 @@
   "about": {
     "title": "About Me",
     "subtitle": "The journey of knowledge",
-    "p1": "I'm a Software Developer from Buenos Aires, Argentina, with nearly a decade of experience spanning the entire IT spectrum — from tech support and systems administration to network engineering and full-stack development.",
+    "p1": "I'm a Software Architect from Buenos Aires, Argentina, with nearly a decade of experience spanning the entire IT spectrum — from tech support and systems administration to network engineering and full-stack development. I don't just write code: I model domains, design systems, and build software that scales with the organization it serves.",
     "p2": "Currently at Tec Solutions, I architect and build Web APIs with C# .NET, applying clean architecture principles (DDD, MVC, BFF) and design patterns (CQRS, Mediator, Builder). I work across the full stack with Angular, React, Node.js, Laravel, and manage relational databases including MySQL, Oracle, and PostgreSQL.",
     "p3": "I'm the founder of Track Signe, a SaaS platform for intelligent verification and tracking in public spaces using QR codes, geolocation, and photographic evidence.",
     "p4": "My current focus is AI-driven development — leveraging AI agents in DDD/SDD workflows, experimenting with MCP tools, and building AI-integrated user interfaces for maximum efficiency.",
@@ -43,11 +44,23 @@
     "subtitle": "A career built on continuous evolution",
     "present": "Present",
     "roles": {
-      "tecSolutions": {
+      "tecSolutionsLead": {
+        "title": "Technical Leader",
+        "company": "Tec Solutions",
+        "period": "Jun 2024 — Present",
+        "description": "Technical leader and architect driving engineering culture across development teams. Own the full spectrum from knowledge management and internal documentation to hands-on architecture design, code review, and roadmap definition. Act as the single point of reference for engineering decisions, and AI-driven development practices. Mentor and manage the developer staff, aligning technical execution with business objectives.",
+        "tags": [
+          "Technical Leadership",
+          "Clean Architecture",
+          "AI Agents",
+          "Team Management"
+        ]
+      },
+      "tecSolutionsDev": {
         "title": "Software Developer",
         "company": "Tec Solutions",
-        "period": "Jan 2023 — Present",
-        "description": "Development of Web APIs with C# .NET with emphasis on Backend, applying best practices for clean and scalable architecture (DDD, MVC, BFF) and implementation of creational and behavioral design patterns (Singleton, Builder, CQRS, Mediator). Management of relational databases: MySQL, Oracle, PostgreSQL. Unit testing with NUnit. Maintenance and development of new features in Angular, Laravel, React, Node.js, Express and WebSockets. Dockerization of new and existing projects.",
+        "period": "Jan 2023 — Jun 2024",
+        "description": "Development of Web APIs with C# .NET applying clean and scalable architecture patterns (DDD, MVC, BFF, CQRS, Mediator). Management of relational databases: MySQL, Oracle, PostgreSQL. Unit testing with NUnit. Maintenance and development of new features in Angular, Laravel, React, Node.js, Express and WebSockets. Dockerization of new and existing projects.",
         "tags": [
           "C#/.NET",
           "React",
@@ -105,6 +118,7 @@
     "founder": "Founder",
     "techLead": "Tech Lead",
     "developer": "Developer",
+    "viewCaseStudy": "View Case Study",
     "items": {
       "trackSigne": {
         "title": "Track Signe",
@@ -204,5 +218,180 @@
   "footer": {
     "rights": "All rights reserved.",
     "builtWith": "Built with Next.js, Three.js & passion for knowledge"
+  },
+  "thinking": {
+    "title": "How I Think",
+    "subtitle": "Mental models behind the systems I build",
+    "items": {
+      "systems": {
+        "title": "Systems over Solutions",
+        "description": "Every problem is a system. I don't write code to fix a bug — I model the domain, understand the flows, and design the system on solid foundations."
+      },
+      "ddd": {
+        "title": "DDD as a Language",
+        "description": "Domain-Driven Design isn't a pattern — it's a communication protocol. When code speaks the same language as the business, requirements, architecture, and the team all align."
+      },
+      "ai": {
+        "title": "AI as a Collaborator",
+        "description": "I don't use AI as only a code generator. I use it as a thinking partner: to explore architecture decisions, challenge assumptions, and accelerate the path from idea to working software."
+      },
+      "buildLearn": {
+        "title": "Build to Learn",
+        "description": "The best way to understand a problem deeply is to build something that solves it. Track Signe, GGM Fitness — each project is a lab for real-world systems thinking."
+      }
+    }
+  },
+  "projectDetails": {
+    "backToProjects": "← Back",
+    "viewLive": "View Live",
+    "viewCode": "View Code",
+    "caseStudy": "Case Study",
+    "items": {
+      "trackSigne": {
+        "headline": "Building intelligent verification for public spaces",
+        "problem": {
+          "title": "The Problem",
+          "content": "Public space monitoring — outdoor advertising, insurance claims, municipal inspections — relied on paper forms and manual processes. No real-time evidence, no verifiable trails, no scale."
+        },
+        "solution": {
+          "title": "The Solution",
+          "content": "Track Signe is a SaaS platform that combines QR code scanning, GPS geolocation, and photographic evidence into a single verified flow. Field agents use a React Native mobile app; managers get real-time dashboards and automated reports on the web panel."
+        },
+        "architecture": {
+          "title": "Architecture",
+          "points": [
+            "REST API built with C# .NET, following DDD and Clean Architecture",
+            "Multi-tenant SaaS with security design for customer isolation",
+            "Angular web panel with real-time dashboards and interactive maps",
+            "React Native mobile app for field agents (QR scan, GPS, camera)",
+
+            "PostgreSQL database with event-sourced audit trail",
+            "Dockerized infrastructure deployed on Azure"
+          ]
+        },
+        "decisions": {
+          "title": "Key Decisions",
+          "points": [
+            "Chose .NET over Node.js for the API: stronger type safety and domain modeling",
+            "React Native over Flutter: Multi-Platform Framework and faster iteration, closer to web skillset",
+            "PostgreSQL for relational metadata with potential to scale to vector embeddings in the future",
+            "Azure App Service for predictable scaling without Kubernetes overhead"
+          ]
+        },
+        "impact": {
+          "title": "Impact",
+          "metrics": [
+            { "value": "Multi-industry", "label": "Outdoor advertising, insurance & municipal" },
+            { "value": "100%", "label": "Digital verification chain, zero paper" },
+            { "value": "Real-time", "label": "Dashboards with live GPS tracking" }
+          ]
+        }
+      },
+      "caucionesDigital": {
+        "headline": "Modernizing insurance brokerage operations at scale",
+        "problem": {
+          "title": "The Problem",
+          "content": "Insurance brokers managed policy requests, client portfolios, and commissions through a fragmented mix of spreadsheets and legacy systems. The process was slow, error-prone, and impossible to scale."
+        },
+        "solution": {
+          "title": "The Solution",
+          "content": "Cauciones Digital is a full-featured web platform that digitizes and automates the entire brokerage workflow. Built with Angular on the frontend and Laravel/C# APIs on the backend, integrated with the company's ERP system."
+        },
+        "architecture": {
+          "title": "Architecture",
+          "points": [
+            "Angular SPA with modular architecture for different broker roles",
+              "REST API in Laravel and microservices in C# for critical business logic",
+            "SQL Server database with stored procedures for ERP integration",
+            "Azure hosting with CI/CD pipelines"
+          ]
+        },
+        "decisions": {
+          "title": "Key Decisions",
+          "points": [
+            "Angular for the frontend given the team's existing expertise",
+            "Hybrid Laravel + C# approach to reuse legacy business logic",
+            "Role-based access control for brokers, policyholders, and internal staff"
+          ]
+        },
+        "impact": {
+          "title": "Impact",
+          "metrics": [
+            { "value": "Led", "label": "Full development team as Tech Lead" },
+            { "value": "Digitized", "label": "Entire policy request workflow" },
+            { "value": "Integrated", "label": "With existing ERP systems" }
+          ]
+        }
+      },
+      "ggmFitness": {
+        "headline": "Building the tech stack for a calisthenics training center",
+        "problem": {
+          "title": "The Problem",
+          "content": "Traditional fitness centers use disconnected tools — WhatsApp for bookings, spreadsheets for attendance, cash for payments. GGM Fitness needed a unified platform to manage classes, members, and growth."
+        },
+        "solution": {
+          "title": "The Solution",
+          "content": "GGM Fitness is an integrated platform covering class scheduling, membership management, attendance tracking, and business analytics. Currently in active development."
+        },
+        "architecture": {
+          "title": "Architecture",
+          "points": [
+            "Angular frontend with mobile-first design",
+            "Node.js + Express REST API",
+            "PostgreSQL database hosted on Google Cloud Platform",
+            "Google Cloud Run for serverless backend deployment"
+          ]
+        },
+        "decisions": {
+          "title": "Key Decisions",
+          "points": [
+            "Node.js + Express for rapid iteration in early stage",
+            "Google Cloud Platform for cost-effective hosting at small scale",
+            "Angular for consistency with other projects in the portfolio"
+          ]
+        },
+        "impact": {
+          "title": "Status",
+          "metrics": [
+            { "value": "In Development", "label": "Active building phase" },
+            { "value": "Real Business", "label": "Live fitness center in Ciudadela, BA" }
+          ]
+        }
+      },
+      "pampazon": {
+        "headline": "A warehouse management system built at UBA",
+        "problem": {
+          "title": "The Context",
+          "content": "Academic project at UBA's Faculty of Economic Sciences — a real-world warehouse and logistics simulation built with C# and WinForms."
+        },
+        "solution": {
+          "title": "The Solution",
+          "content": "Pampazon implements a complete warehouse management system with deposit management, operations module, and full test case validation coverage."
+        },
+        "architecture": {
+          "title": "Architecture",
+          "points": [
+            "C# WinForms desktop application",
+            ".NET Framework with layered architecture",
+            "Comprehensive unit test coverage"
+          ]
+        },
+        "decisions": {
+          "title": "Key Decisions",
+          "points": [
+            "WinForms for rapid UI development in a desktop context",
+            "Layered architecture to practice separation of concerns",
+            "Test-first approach for operations module validation"
+          ]
+        },
+        "impact": {
+          "title": "Outcome",
+          "metrics": [
+            { "value": "Open Source", "label": "Available on GitHub" },
+            { "value": "Academic", "label": "UBA graded project" }
+          ]
+        }
+      }
+    }
   }
 }

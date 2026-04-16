@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { Link } from "@/i18n/navigation";
 import { projects } from "@/data/projects";
 
 export default function Projects() {
@@ -116,6 +117,14 @@ export default function Projects() {
                       </svg>
                       {t("viewCode")}
                     </a>
+                  )}
+                  {project.featured && (
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="inline-flex items-center gap-1 text-sm text-accent-purple hover:text-accent-purple/80 transition-colors ml-auto"
+                    >
+                      {t("viewCaseStudy")} →
+                    </Link>
                   )}
                 </div>
               </div>

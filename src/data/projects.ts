@@ -1,6 +1,7 @@
 export const projects = [
   {
     key: "trackSigne",
+    slug: "track-signe",
     url: "https://track-signe.com/",
     image: "/images/projects/track-signe.png",
     badge: "founder",
@@ -8,6 +9,7 @@ export const projects = [
   },
   {
     key: "caucionesDigital",
+    slug: "cauciones-digital",
     url: "https://cauciones.com/cauciones-digital/",
     image: "/images/projects/cauciones-digital.png",
     badge: "techLead",
@@ -15,6 +17,7 @@ export const projects = [
   },
   {
     key: "ggmFitness",
+    slug: "ggm-fitness",
     url: "https://ggm.fitness/",
     image: "/images/projects/ggm-fitness.png",
     badge: "founder",
@@ -23,6 +26,7 @@ export const projects = [
   },
   {
     key: "pampazon",
+    slug: "pampazon",
     url: "https://github.com/gangione/Pampazon",
     image: "/images/projects/pampazon.png",
     badge: "developer",

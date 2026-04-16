@@ -1,10 +1,11 @@
 {
   "metadata": {
-    "title": "Gabriel Angione — Desarrollador de Software",
-    "description": "Desarrollador de Software especializado en .NET, React y desarrollo con IA. Fundador de Track Signe. Construyendo soluciones escalables con arquitectura limpia."
+    "title": "Gabriel Angione — Arquitecto de Software & Builder",
+    "description": "Arquitecto de Software especializado en .NET, DDD, CQRS y desarrollo con IA. Fundador de Track Signe. Construyendo sistemas escalables orientados al conocimiento."
   },
   "nav": {
     "about": "Sobre mí",
+    "thinking": "Cómo Pienso",
     "experience": "Experiencia",
     "projects": "Proyectos",
     "techStack": "Tecnologías",
@@ -15,8 +16,8 @@
   "hero": {
     "greeting": "Hola, soy",
     "name": "Gabriel Angione",
-    "role": "Desarrollador de Software",
-    "tagline": "Construyendo el futuro de las organizaciones a través del código, la arquitectura y la innovación con IA.",
+    "role": "Arquitecto de Software & Builder",
+    "tagline": "Diseño sistemas, no solo software. Construyo conocimiento en arquitectura escalable y productos potenciados por IA.",
     "cta": {
       "projects": "Ver Proyectos",
       "contact": "Contacto"
@@ -25,7 +26,7 @@
   "about": {
     "title": "Sobre Mí",
     "subtitle": "El camino del conocimiento",
-    "p1": "Soy un Desarrollador de Software de Buenos Aires, Argentina, con casi una década de experiencia abarcando todo el espectro IT — desde soporte técnico y administración de sistemas hasta ingeniería de redes y desarrollo full-stack.",
+    "p1": "Soy un Arquitecto de Software de Buenos Aires, Argentina, con casi una década de experiencia abarcando todo el espectro IT — desde soporte técnico y administración de sistemas hasta ingeniería de redes y desarrollo full-stack. No solo escribo código: modelo dominios, diseño sistemas y construyo software que escala con la organización que sirve.",
     "p2": "Actualmente en Tec Solutions, diseño y construyo Web APIs con C# .NET, aplicando principios de arquitectura limpia (DDD, MVC, BFF) y patrones de diseño (CQRS, Mediator, Builder). Trabajo en todo el stack con Angular, React, Node.js, Laravel, y gestiono bases de datos relacionales incluyendo MySQL, Oracle y PostgreSQL.",
     "p3": "Soy el fundador de Track Signe, una plataforma SaaS para verificación y seguimiento inteligente en vía pública usando códigos QR, geolocalización y evidencia fotográfica.",
     "p4": "Mi enfoque actual es el desarrollo impulsado por IA — aprovechando agentes de IA en flujos DDD/SDD, experimentando con herramientas MCP y construyendo interfaces de usuario integradas con IA para máxima eficiencia.",
@@ -43,11 +44,23 @@
     "subtitle": "Una carrera construida sobre evolución continua",
     "present": "Presente",
     "roles": {
-      "tecSolutions": {
+      "tecSolutionsLead": {
+        "title": "Líder Técnico",
+        "company": "Tec Solutions",
+        "period": "Jun 2024 — Presente",
+        "description": "Líder técnico y arquitecto responsable de impulsar la cultura de ingeniería en los equipos de desarrollo. Abarca desde la gestión del conocimiento y documentación interna hasta el diseño de arquitectura, revisión de código y definición del roadmap técnico. Referente técnico único para decisiones de arquitectura y prácticas de desarrollo potenciadas por IA. Mentoreo y gestión del staff de desarrolladores, alineando la ejecución técnica con los objetivos del negocio.",
+        "tags": [
+          "Liderazgo Técnico",
+          "Arquitectura Limpia",
+          "Agentes de IA",
+          "Gestión de Equipos"
+        ]
+      },
+      "tecSolutionsDev": {
         "title": "Desarrollador de Software",
         "company": "Tec Solutions",
-        "period": "Ene 2023 — Presente",
-        "description": "Desarrollo de Web APIs con C# .NET con énfasis en Backend aplicando buenas prácticas para códigos con una arquitectura limpia y escalable (DDD, MVC, BFF) e implementación de patrones de diseño creacionales y de comportamiento (Singleton, Builder, CQRS, Mediator). Manejo de bases de datos relacionales: MySQL, Oracle, PostgreSQL. Creación de test unitarios con NUnit. Mantenimiento y desarrollo de nuevas funcionalidades en Angular, Laravel, React, NodeJS, Express y WebSockets. Dockerización de nuevos desarrollos y proyectos existentes.",
+        "period": "Ene 2023 — Jun 2024",
+        "description": "Desarrollo de Web APIs con C# .NET aplicando patrones de arquitectura limpia y escalable (DDD, MVC, BFF, CQRS, Mediator). Manejo de bases de datos relacionales: MySQL, Oracle, PostgreSQL. Test unitarios con NUnit. Mantenimiento y desarrollo de nuevas funcionalidades en Angular, Laravel, React, NodeJS, Express y WebSockets. Dockerización de nuevos desarrollos y proyectos existentes.",
         "tags": [
           "C#/.NET",
           "React",
@@ -105,6 +118,7 @@
     "founder": "Fundador",
     "techLead": "Tech Lead",
     "developer": "Desarrollador",
+    "viewCaseStudy": "Ver Caso de Estudio",
     "items": {
       "trackSigne": {
         "title": "Track Signe",
@@ -165,8 +179,8 @@
       "uba": {
         "title": "Licenciatura en Sistemas de Información de las Organizaciones",
         "institution": "Universidad de Buenos Aires — Facultad de Ciencias Económicas",
-        "period": "2015 — Presente",
-        "status": "Estudiante avanzado — 10 materias restantes",
+        "period": "2015 — 2026",
+        "status": "Licenciado",
         "description": "Programa integral que abarca ingeniería de software, bases de datos, redes, seguridad informática, gestión de proyectos, contabilidad, economía y sistemas organizacionales."
       },
       "bachiller": {
@@ -204,5 +218,179 @@
   "footer": {
     "rights": "Todos los derechos reservados.",
     "builtWith": "Construido con Next.js, Three.js y pasión por el conocimiento"
+  },
+  "thinking": {
+    "title": "Cómo Pienso",
+    "subtitle": "Los modelos mentales detrás de los sistemas que construyo",
+    "items": {
+      "systems": {
+        "title": "Sistemas sobre Soluciones",
+        "description": "Cada problema es un sistema. No escribo código para arreglar un bug — modelo el dominio, entiendo los flujos y diseño el sistema sobre bases sólidas."
+      },
+      "ddd": {
+        "title": "DDD como Lenguaje",
+        "description": "El Diseño Orientado al Dominio no es un patrón — es un protocolo de comunicación. Cuando el código habla el mismo lenguaje que el negocio, los requerimientos, la arquitectura y el equipo se alinean."
+      },
+      "ai": {
+        "title": "IA como Colaborador",
+        "description": "No uso la IA como sólo para generar código. La uso como compañero de pensamiento: para explorar decisiones de arquitectura, cuestionar supuestos y acelerar el camino de la idea al software funcional."
+      },
+      "buildLearn": {
+        "title": "Construir para Aprender",
+        "description": "La mejor forma de entender un problema en profundidad es construir algo que lo resuelva. Track Signe, GGM Fitness — cada proyecto es un laboratorio de pensamiento sistémico real."
+      }
+    }
+  },
+  "projectDetails": {
+    "backToProjects": "← Volver",
+    "viewLive": "Ver en Vivo",
+    "viewCode": "Ver Código",
+    "caseStudy": "Caso de Estudio",
+    "items": {
+      "trackSigne": {
+        "headline": "Construyendo verificación inteligente para espacios públicos",
+        "problem": {
+          "title": "El Problema",
+          "content": "El monitoreo de espacios públicos — publicidad exterior, siniestros de seguros, inspecciones municipales — dependía de formularios en papel y procesos manuales. Sin evidencia en tiempo real, sin trazabilidad verificable, sin escala."
+        },
+        "solution": {
+          "title": "La Solución",
+          "content": "Track Signe es una plataforma SaaS que combina escaneo de códigos QR, geolocalizón GPS y evidencia fotográfica en un único flujo de verificación comprobable. Los agentes de campo usan una app React Native; los gestores obtienen dashboards en tiempo real e informes automatizados en el panel web."
+        },
+        "architecture": {
+          "title": "Arquitectura",
+          "points": [
+            "REST API construida con C# .NET, siguiendo DDD y Arquitectura Limpia",
+            "Multi tenant SaaS con diseño de seguridad para aislamiento de clientes",
+            "Panel web Angular con dashboards en tiempo real y mapas interactivos",
+            "App móvil React Native para agentes de campo (escaneo QR, GPS, cámara)",
+            "Base de datos PostgreSQL con trazabilidad de eventos",
+            "Infraestructura Dockerizada desplegada en Azure"
+          ]
+        },
+        "decisions": {
+          "title": "Decisiones Clave",
+          "points": [
+            ".NET sobre Node.js para la API: mayor seguridad de tipos y modelado de dominio",
+            "React Native sobre Flutter: Framework Multi-Plataforma e iteración más rápida, más cercano al stack web",
+            "PostgreSQL para metadatos relacionales con posibilidad de escalar a embeddings vectoriales en el futuro",
+            "Azure App Services para escalado predecible sin overhead de Kubernetes"
+          ]
+        },
+        "impact": {
+          "title": "Impacto",
+          "metrics": [
+            { "value": "Multi-industria", "label": "Publicidad exterior, seguros y gestión municipal" },
+            { "value": "100%", "label": "Cadena de verificación digital, cero papel" },
+            { "value": "Tiempo real", "label": "Dashboards con seguimiento GPS en vivo" }
+          ]
+        }
+      },
+      "caucionesDigital": {
+        "headline": "Modernizando operaciones de corretaje de seguros a escala",
+        "problem": {
+          "title": "El Problema",
+          "content": "Los productores de seguros gestionaban solicitudes de pólizas, carteras de clientes y comisiones con una mezcla fragmentada de planillas y sistemas heredados. El proceso era lento, propenso a errores e imposible de escalar."
+        },
+        "solution": {
+          "title": "La Solución",
+          "content": "Cauciones Digital es una plataforma web completa que digitaliza y automatiza todo el flujo de trabajo del corretaje. Construida con Angular en el frontend y APIs Laravel/C# en el backend, integrada con el sistema ERP de la empresa."
+        },
+        "architecture": {
+          "title": "Arquitectura",
+          "points": [
+            "SPA Angular con arquitectura modular para diferentes roles de productor",
+            "API REST en Laravel y microservicios en C# para lógica de negocio crítica",
+            "Base de datos SQL Server con Stored Procedures para integración con ERP",
+            "Hosting en Azure"
+          ]
+        },
+        "decisions": {
+          "title": "Decisiones Clave",
+          "points": [
+            "Angular para el frontend dada la experiencia existente del equipo",
+            "Enfoque híbrido Laravel + C# para reutilizar lógica de negocio heredada",
+            "Control de acceso por roles para productores, asegurados y personal interno"
+          ]
+        },
+        "impact": {
+          "title": "Impacto",
+          "metrics": [
+            { "value": "Lideré", "label": "Equipo completo de desarrollo como Tech Lead" },
+            { "value": "Digitalicé", "label": "Todo el flujo de solicitud de pólizas" },
+            { "value": "Integré", "label": "Con sistemas ERP existentes" }
+          ]
+        }
+      },
+      "ggmFitness": {
+        "headline": "Construyendo el stack tecnológico para un centro de calistenia",
+        "problem": {
+          "title": "El Problema",
+          "content": "Los centros de fitness tradicionales usan herramientas desconectadas — WhatsApp para reservas, planillas para asistencia, efectivo para pagos. GGM Fitness necesitaba una plataforma unificada para gestionar clases, miembros y crecimiento."
+        },
+        "solution": {
+          "title": "La Solución",
+          "content": "GGM Fitness es una plataforma integrada que cubre programación de clases, gestión de membersías, seguimiento de asistencia y análisis de negocio. Actualmente en desarrollo activo."
+        },
+        "architecture": {
+          "title": "Arquitectura",
+          "points": [
+            "Frontend Angular con diseño mobile-first",
+            "API REST Node.js + Express",
+            "Base de datos PostgreSQL en Google Cloud Platform",
+            "Google Cloud Run para despliegue serverless del backend"
+          ]
+        },
+        "decisions": {
+          "title": "Decisiones Clave",
+          "points": [
+            "Node.js + Express para iteración rápida en etapa temprana",
+            "Google Cloud Platform para hosting económico a pequeña escala",
+            "Angular para consistencia con otros proyectos del portfolio"
+          ]
+        },
+        "impact": {
+          "title": "Estado",
+          "metrics": [
+            { "value": "En Desarrollo", "label": "Fase de construcción activa" },
+            { "value": "Negocio Real", "label": "Centro de fitness en vivo en Ciudadela, BA" }
+          ]
+        }
+      },
+      "pampazon": {
+        "headline": "Sistema de gestión de depósitos construido para la UBA",
+        "problem": {
+          "title": "El Contexto",
+          "content": "Proyecto académico en la Facultad de Ciencias Económicas de la UBA — una simulación real de almacén y logística construida con C# y WinForms."
+        },
+        "solution": {
+          "title": "La Solución",
+          "content": "Pampazon implementa un sistema completo de gestión de depósitos con gestión de almacenes, módulo de operaciones y cobertura completa de validación de casos de prueba."
+        },
+        "architecture": {
+          "title": "Arquitectura",
+          "points": [
+            "Aplicación de escritorio C# WinForms",
+            ".NET Framework con arquitectura por capas",
+            "Cobertura completa de tests unitarios"
+          ]
+        },
+        "decisions": {
+          "title": "Decisiones Clave",
+          "points": [
+            "WinForms para desarrollo rápido de UI en contexto de escritorio",
+            "Arquitectura por capas para practicar separación de responsabilidades",
+            "Enfoque test-first para validación del módulo de operaciones"
+          ]
+        },
+        "impact": {
+          "title": "Resultado",
+          "metrics": [
+            { "value": "Open Source", "label": "Disponible en GitHub" },
+            { "value": "Académico", "label": "Proyecto calificado en UBA" }
+          ]
+        }
+      }
+    }
   }
 }
