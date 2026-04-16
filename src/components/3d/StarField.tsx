@@ -4,9 +4,65 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+// Suppress THREE.Clock deprecation warning from @react-three/fiber internals
+// (R3F v9 still uses THREE.Clock; no stable release with THREE.Timer yet)
+if (typeof window !== "undefined") {
+  const _warn = console.warn;
+  console.warn = (...args: unknown[]) => {
+    if (typeof args[0] === "string" && args[0].includes("THREE.Clock")) return;
+    _warn.apply(console, args);
+  };
+}
+
+const circleVertexShader = /* glsl */ `
+  attribute float size;
+  varying float vAlpha;
+  void main() {
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_PointSize = size * (200.0 / -mvPosition.z);
+    gl_Position = projectionMatrix * mvPosition;
+    vAlpha = 1.0;
+  }
+`;
+
+function createCircleShaderMaterial(color: string, opacity: number, baseSize: number, useSizeAttr: boolean) {
+  const fragmentShader = /* glsl */ `
+    uniform vec3 uColor;
+    uniform float uOpacity;
+    void main() {
+      float dist = length(gl_PointCoord - vec2(0.5));
+      if (dist > 0.5) discard;
+      float alpha = 1.0 - smoothstep(0.35, 0.5, dist);
+      gl_FragColor = vec4(uColor, alpha * uOpacity);
+    }
+  `;
+
+  const vertexShader = useSizeAttr
+    ? circleVertexShader
+    : /* glsl */ `
+      void main() {
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = ${baseSize.toFixed(1)} * (200.0 / -mvPosition.z);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `;
+
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uColor: { value: new THREE.Color(color) },
+      uOpacity: { value: opacity },
+    },
+    vertexShader,
+    fragmentShader,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+}
+
 function Stars() {
   const ref = useRef<THREE.Points>(null);
-  const count = 3000;
+  const count = 1200;
 
   const [positions, sizes] = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -38,22 +94,14 @@ function Stars() {
           args={[sizes, 1]}
         />
       </bufferGeometry>
-      <pointsMaterial
-        size={0.12}
-        color="#60a5fa"
-        transparent
-        opacity={0.8}
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
+      <primitive object={createCircleShaderMaterial("#60a5fa", 0.4, 0, true)} attach="material" />
     </points>
   );
 }
 
 function FloatingParticles() {
   const ref = useRef<THREE.Points>(null);
-  const count = 200;
+  const count = 80;
 
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -79,15 +127,7 @@ function FloatingParticles() {
           args={[positions, 3]}
         />
       </bufferGeometry>
-      <pointsMaterial
-        size={0.2}
-        color="#f59e0b"
-        transparent
-        opacity={0.6}
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
+      <primitive object={createCircleShaderMaterial("#f59e0b", 0.3, 4.0, false)} attach="material" />
     </points>
   );
 }
