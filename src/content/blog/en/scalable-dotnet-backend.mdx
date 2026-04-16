@@ -1,0 +1,151 @@
+---
+title: "Designing a Scalable .NET Backend from Scratch"
+description: "A hands-on guide to building scalable .NET backends using Clean Architecture, DDD, and CQRS — with real decisions from production systems."
+date: "2026-04-05"
+tags: ["Architecture", ".NET", "DDD", "CQRS", "C#"]
+keywords: ["scalable .NET backend", "clean architecture C#", "DDD CQRS .NET", "dotnet backend architecture"]
+series: "Architecture"
+---
+
+Most backend tutorials show you how to build something. Few show you how to build something that lasts. This article is about the second kind.
+
+I'll walk through the architectural decisions I apply when starting a new .NET backend — from project structure to CQRS patterns — with the reasoning behind each choice.
+
+## The Foundation: Why Architecture Matters Before Line 1
+
+### The Cost of Getting It Wrong Early
+
+A wrong data model is cheap to fix in week one. Expensive in month six. Architecture decisions — how layers communicate, where business logic lives, how the domain is modeled — compound over time. Getting them right early is not over-engineering; it's investment.
+
+### Layered vs. Clean Architecture: The Real Difference
+
+Layered architecture enforces direction (UI → BLL → DAL). Clean Architecture enforces dependency inversion: the domain doesn't know about anything outside itself. Infrastructure adapts to the domain, not the reverse.
+
+For most .NET backends, Clean Architecture is worth the setup cost. The domain becomes testable in isolation, the infrastructure becomes swappable, and the application layer becomes a clear specification of what the system does.
+
+### When to Use What
+
+CRUD-heavy admin panels: layered architecture or Minimal APIs with service classes is fine. Complex domains with rich business rules: Clean Architecture + DDD. Choose based on the business complexity, not personal preference.
+
+## Domain-Driven Design Building Blocks
+
+### Entities, Value Objects, and Aggregates
+
+- **Entity**: has identity, mutable state. Example: `Verification` with an ID.
+- **Value Object**: has no identity, defined by its values. Example: `GpsCoordinate(lat, lng)`.
+- **Aggregate**: a cluster of entities and value objects with a root that enforces invariants. Example: `Campaign` aggregate with child `Verification` entities.
+
+Keep aggregates small. The common mistake is making an aggregate so large it becomes a god object.
+
+### Domain Events and How to Publish Them
+
+Domain events represent things that happened in the domain. `VerificationCompleted`, `CampaignClosed`. Raise them inside aggregate methods, collect them before saving, dispatch them after the transaction commits.
+
+```csharp
+public class Campaign : AggregateRoot
+{
+    public void CompleteVerification(VerificationId id, Evidence evidence)
+    {
+        var verification = _verifications.Get(id);
+        verification.Complete(evidence);
+        RaiseDomainEvent(new VerificationCompleted(Id, id, evidence));
+    }
+}
+```
+
+### The Repository Pattern Done Right
+
+Repositories abstract persistence for aggregates only — not for every table. One repository per aggregate root. Keep query methods minimal on the repository; use read models and query handlers for complex reads.
+
+## CQRS with MediatR
+
+### Separating Commands from Queries
+
+Commands change state. Queries read state. They have different optimization pressures — don't use the same model for both. Commands go through your domain. Queries can bypass the domain and hit the read model directly.
+
+### The Handler Pattern
+
+```csharp
+public class CompleteVerificationHandler : IRequestHandler<CompleteVerificationCommand, Result>
+{
+    public async Task<Result> Handle(CompleteVerificationCommand cmd, CancellationToken ct)
+    {
+        var campaign = await _campaigns.GetAsync(cmd.CampaignId, ct);
+        campaign.CompleteVerification(cmd.VerificationId, cmd.Evidence);
+        await _campaigns.SaveAsync(campaign, ct);
+        return Result.Ok();
+    }
+}
+```
+
+The handler orchestrates, the domain decides, the repository persists. Each layer has one job.
+
+### Validation with FluentValidation
+
+Validate commands at the application boundary before they hit the domain. Use MediatR pipeline behaviors to run FluentValidation automatically on every command. Domain invariants are a second line of defense — they shouldn't be the only one.
+
+## The Application Layer
+
+### Use Cases as Application Services
+
+Each command handler maps to one use case. Naming matters: `CompleteVerificationCommand`, `CreateCampaignCommand`, `GenerateReportQuery`. Reading your handlers should read like a table of contents for what your system does.
+
+### Mapping Between Layers
+
+AutoMapper reduces boilerplate but adds magic. Manual mapping is verbose but explicit. My rule: use AutoMapper for simple DTOs. Write manual mappers when the transformation has real logic — that logic belongs somewhere visible.
+
+### Error Handling That Makes Sense
+
+Use the Result pattern instead of exceptions for expected failures. Exceptions are for unexpected states. A command that fails because a campaign is already closed is not exceptional — it's a valid business outcome. Return a typed failure result.
+
+## A Real Example: Track Signe's Verification API
+
+### The Domain Model
+
+`Campaign` is the aggregate root. It owns a collection of `Verification` entities. Each `Verification` holds a `GpsCoordinate`, a `PhotoEvidence` reference, and a `VerificationStatus` value object.
+
+### A Command Flow End-to-End
+
+1. Controller receives HTTP request → creates `CompleteVerificationCommand`
+2. MediatR dispatches to `CompleteVerificationHandler`
+3. Handler loads `Campaign` aggregate via repository
+4. Calls `campaign.CompleteVerification(...)` → domain invariants run → domain event raised
+5. Repository saves aggregate → EF Core maps to database
+6. Domain events dispatched → integrations notified
+
+### Unit Testing the Domain
+
+```csharp
+[Fact]
+public void CompleteVerification_WithValidEvidence_RaisesEvent()
+{
+    var campaign = CampaignFactory.Active();
+    var verificationId = campaign.Verifications.First().Id;
+
+    campaign.CompleteVerification(verificationId, Evidence.Valid());
+
+    campaign.DomainEvents.Should().ContainSingle<VerificationCompleted>();
+}
+```
+
+No database, no HTTP. Pure domain logic tested in isolation.
+
+## Common Mistakes
+
+### Fat Controllers
+
+Controllers should be thin orchestrators. If your controller has more than 20 lines of logic, that logic belongs in a handler or domain service.
+
+### Anemic Domain Models
+
+An anemic domain model has entities with only properties and no behavior. All the logic ends up in service classes. The domain becomes a data bag. Fix it by moving behavior back into entities and aggregates.
+
+### Over-engineering at Day 1
+
+Not every project needs Clean Architecture. Not every domain needs DDD. Start with the simplest architecture that can survive the complexity you know is coming — not the complexity you imagine might come.
+
+## Conclusion
+
+A well-designed .NET backend doesn't happen by accident. It comes from deliberate decisions made early — about boundaries, responsibilities, and where business logic lives.
+
+Start with the domain. Model what the business does before you think about how to persist or expose it. The architecture follows from the domain model, not the other way around.

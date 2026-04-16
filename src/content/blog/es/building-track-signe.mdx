@@ -1,0 +1,110 @@
+---
+title: "Construyendo Track Signe: De la Idea al SaaS en Producción"
+description: "La historia completa de construir Track Signe — desde el problema inicial hasta un SaaS multi-industria en producción. Decisiones de arquitectura, desafíos y lecciones aprendidas."
+date: "2026-04-12"
+tags: ["SaaS", "Arquitectura", ".NET", "Track Signe", "Startup"]
+keywords: ["desarrollo SaaS .NET", "arquitectura app QR tracking", "construir SaaS Argentina", "arquitectura track signe"]
+series: "Construyendo Productos"
+---
+
+En 2022 empecé a construir Track Signe. No porque fuera un proyecto paralelo — porque vi un problema que ninguna herramienta existente estaba resolviendo bien: **¿cómo verificás que un trabajo se hizo realmente, en un espacio público, con evidencia irrefutable?**
+
+Esta es la historia completa. Desde la definición del problema hasta la arquitectura en producción, las decisiones que repetiría y las que cambiaría.
+
+## El Problema: Por Qué las Herramientas Existentes Fallaban
+
+### El Problema de la Industria de la Publicidad Exterior
+
+Las empresas de publicidad exterior le pagan a contratistas para instalar y mantener carteleras, banners y displays a lo largo de una ciudad. La verificación se hacía con formularios de papel y fotos por WhatsApp — sin sello GPS, sin integridad de timestamp, sin cadena de custodia. Las disputas eran comunes. El fraude era posible.
+
+### Lo que los Siniestros de Seguros Realmente Necesitan
+
+Los tasadores de seguros que visitan sitios de daño enfrentan el mismo problema: necesitan evidencia fotográfica georreferenciada con una cadena de auditoría ininterrumpida. Las fotos de teléfono con metadata editable no cumplen los estándares legales.
+
+### Por Qué QR + GPS + Foto = la Prueba Mínima Viable
+
+La intuición: un evento de verificación es una tupla de (quién, dónde, cuándo, qué). Los códigos QR identifican el activo que se verifica. El GPS provee ubicación resistente a manipulación. Las fotos proveen evidencia visual. Los tres juntos, timestampeados en nuestros servidores, crean una cadena de verificación difícil de disputar.
+
+## Definiendo el Loop Central
+
+### El Flujo de Verificación: Desde la Asignación hasta la Evidencia
+
+1. El gestor crea una campaña y asigna puntos de verificación (mapeados a activos físicos)
+2. El agente de campo recibe la asignación en la app móvil
+3. El agente llega al lugar → escanea el código QR → coordenadas GPS capturadas → saca las fotos requeridas
+4. Verificación enviada → el servidor valida la proximidad GPS al punto asignado
+5. El gestor ve la actualización en el dashboard en tiempo real
+
+### Multi-industria desde el Día 1 vs. MVP Enfocado
+
+Lo construí multi-industria desde el principio — un error en retrospectiva. El caso de uso de publicidad exterior era suficientemente claro para lanzar. Soportar siniestros de seguros y gestión municipal desde el día uno agregó complejidad antes de que hubiera probado el loop central. La decisión correcta hubiera sido validar un vertical completamente.
+
+### El Modelo de Datos que lo Hace Funcionar
+
+Las entidades centrales: `Campaña` (un conjunto de puntos de verificación con una ventana temporal), `PuntoVerificacion` (una ubicación física con un activo), `Verificacion` (un chequeo completado con evidencia). El agregado `Campaña` impone las reglas — una verificación solo es válida si las coordenadas GPS coinciden con el punto asignado dentro de un radio configurado.
+
+## Decisiones Técnicas de Arquitectura
+
+### Por Qué .NET y No Node.js
+
+Elegí .NET para el backend porque el dominio tenía reglas de negocio reales: validación de proximidad GPS, integridad de la cadena de evidencia, aislamiento de datos multi-tenant. Estos necesitaban un modelo de dominio con tipos fuertes y testeable. El tooling DDD de .NET (tipos fuertes, value objects, patrones de agregado) mantuvo el dominio limpio. Node hubiera funcionado pero requería más disciplina para lograr la misma estructura.
+
+### Angular para el Panel Web
+
+El panel web es un dashboard de gestión de campañas — formularios complejos, actualizaciones en tiempo real, mapas interactivos. La estructura opinionada de Angular (módulos, servicios, DI) fue el fit correcto para una interfaz de administración rica en features. React hubiera sido más rápido para empezar; Angular fue más rápido de mantener.
+
+### React Native para la App Móvil
+
+La app del agente de campo necesitaba funcionar en iOS y Android. React Native me permitió compartir lógica de negocio entre el codebase web y la app móvil. El trade-off: el ecosistema de módulos nativos de React Native es ocasionalmente doloroso. Vale la pena por el sharing de código.
+
+### PostgreSQL: Diseño de Schema para Datos Geo
+
+La extensión PostGIS de PostgreSQL provee tipos y funciones geoespaciales nativas. Almacenar ubicaciones de `PuntoVerificacion` como `POINT` y consultar proximidad con `ST_DWithin` es vastamente más limpio que calcular distancia Haversine en código de aplicación. Esta fue la decisión correcta.
+
+## Las Partes Difíciles que Nadie Menciona
+
+### Modo Offline en React Native
+
+Los agentes de campo trabajan en lugares con mala conectividad. La app necesita encolar verificaciones localmente y sincronizar cuando vuelve la conectividad. Implementar sincronización offline confiable con resolución de conflictos en React Native es significativamente más difícil de lo que sugiere la documentación. Usé una cola SQLite local con operaciones de sincronización idempotentes.
+
+### Dashboards en Tiempo Real a Escala
+
+Empujar actualizaciones de verificación al dashboard en tiempo real requiere WebSockets o SSE. Elegí SignalR en el lado .NET — bien integrado con el stack existente. Escalarlo requiere manejo cuidadoso de conexiones y un Redis backplane para despliegues multi-instancia.
+
+### Aislamiento de Datos Multi-tenant
+
+Cada `Campaña`, `PuntoVerificacion` y `Verificacion` pertenece a una organización. Las Row-Level Security policies de PostgreSQL imponen aislamiento a nivel de base de datos, además del contexto de tenant a nivel de aplicación. Defensa en profundidad para datos sensibles de clientes.
+
+## Infraestructura: Azure desde el Día 1
+
+### De Docker Compose a Azure App Service
+
+El desarrollo local corre en Docker Compose: API, base de datos y Redis en un comando. Producción corre en Azure App Service para la API y Azure Database for PostgreSQL. El entorno de desarrollo containerizado hizo el despliegue en Azure directo.
+
+### El Pipeline CI/CD
+
+GitHub Actions maneja el CI: build, test y push de imágenes Docker en cada push a main. Azure App Service toma la nueva imagen y reinicia. Deploys sin downtime con endpoints de health check.
+
+### Monitoreo y Alertas
+
+Azure Application Insights para APM. Métricas customizadas para tasas de éxito de verificaciones, fallas de validación GPS y profundidad de la cola de sincronización. Alertas en picos de tasa de error y latencia p95.
+
+## Lo que Haría Diferente
+
+### La Decisión de la App Móvil
+
+React Native fue la elección correcta para compartir código, pero la experiencia de desarrollo tiene fricciones que Swift/Kotlin no tendrían. Para un producto mobile-first, evaluaría el desarrollo nativo más seriamente. El beneficio del sharing de código es real — pero la experiencia de performance y debugging nativo tiene un costo.
+
+### Arrepentimientos del Schema de Base de Datos
+
+Modelé `Evidencia` como columna JSON temprano por flexibilidad. Esa flexibilidad se volvió una responsabilidad cuando necesité consultar campos específicos de evidencia. Columnas estructuradas con valores nullables hubiera sido más limpio. Los schemas flexibles en bases de datos relacionales son usualmente una trampa.
+
+### Lanzar a Una Industria Primero
+
+El posicionamiento multi-industria fue un error de marketing tanto como técnico. "Funcionamos para publicidad exterior, seguros y municipios" es una venta más difícil que "resolvemos la verificación de publicidad exterior". Debería haber dominado un vertical antes de expandirme.
+
+## Lecciones para Otros Constructores de SaaS
+
+Construir un SaaS solo mientras trabajás full-time te enseña a tomar decisiones rápido y vivir con ellas. La arquitectura sobrevivió gracias a la disciplina del DDD — no a pesar de ella. Cuando el modelo de dominio es claro, agregar features es aditivo. Cuando está turbio, cada feature es una renegociación de lo que el sistema es.
+
+Lo más valioso no fue el stack tecnológico. Fue la claridad sobre lo que significa una "verificación verificada" — y codificarlo como invariante en el dominio, no como validación en la API.

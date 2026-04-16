@@ -1,0 +1,110 @@
+---
+title: "Building Track Signe: From Idea to SaaS in Production"
+description: "The full story of building Track Signe — from the initial problem to a multi-industry SaaS in production. Architecture decisions, challenges, and lessons learned."
+date: "2026-04-12"
+tags: ["SaaS", "Architecture", ".NET", "Track Signe", "Startup"]
+keywords: ["SaaS development .NET", "QR tracking app architecture", "building SaaS Argentina", "track signe architecture"]
+series: "Building Products"
+---
+
+In 2022, I started building Track Signe. Not because it was a side project — because I saw a problem that no existing tool was solving properly: **how do you verify that a job was actually done, in a public space, with irrefutable evidence?**
+
+This is the full story. From problem definition to production architecture, the decisions I'd repeat and the ones I'd change.
+
+## The Problem: Why Existing Tools Failed
+
+### The Outdoor Advertising Industry Problem
+
+Outdoor advertising companies pay contractors to install and maintain billboards, banners, and displays across a city. Verification was done by paper forms and WhatsApp photos — no GPS stamp, no timestamp integrity, no chain of custody. Disputes were common. Fraud was possible.
+
+### What Insurance Claims Actually Need
+
+Insurance adjusters visiting damage sites face the same problem: they need georeferenced photographic evidence with an unbroken audit trail. Phone photos with editable metadata don't meet legal standards.
+
+### Why QR + GPS + Photo = the Minimum Viable Proof
+
+The insight: a verification event is a tuple of (who, where, when, what). QR codes identify the asset being verified. GPS provides tamper-resistant location. Photos provide visual evidence. All three together, timestamped on our servers, create a verification chain that's hard to dispute.
+
+## Defining the Core Loop
+
+### The Verification Flow: From Assignment to Evidence
+
+1. Manager creates a campaign and assigns verification points (mapped to physical assets)
+2. Field agent receives assignment on mobile app
+3. Agent arrives at location → scans QR code → GPS coordinates captured → takes required photos
+4. Verification submitted → server validates GPS proximity to assigned location
+5. Manager sees real-time dashboard update
+
+### Multi-industry from Day 1 vs. Focused MVP
+
+I built it multi-industry from the start — a mistake in retrospect. The outdoor advertising use case was clear enough to launch with. Supporting insurance claims and municipal management from day one added complexity before I had proven the core loop. The right call would have been to validate one vertical completely.
+
+### The Data Model That Makes It Work
+
+The core entities: `Campaign` (a set of verification points with a time window), `VerificationPoint` (a physical location with an asset), `Verification` (a completed check with evidence). The `Campaign` aggregate enforces the rules — a verification is only valid if the GPS coordinates match the assigned point within a configured radius.
+
+## Technical Architecture Decisions
+
+### Why .NET and Not Node.js
+
+I chose .NET for the backend because the domain had real business rules: GPS proximity validation, evidence chain integrity, multi-tenant data isolation. These needed a type-safe, testable domain model. .NET's DDD tooling (strong types, value objects, aggregate patterns) made the domain clean. Node would have worked but required more discipline to achieve the same structure.
+
+### Angular for the Web Panel
+
+The web panel is a campaign management dashboard — complex forms, real-time updates, interactive maps. Angular's opinionated structure (modules, services, DI) was the right fit for a feature-rich admin interface. React would have been faster to start; Angular was faster to maintain.
+
+### React Native for the Mobile App
+
+The field agent app needed to work on both iOS and Android. React Native let me share business logic between the web codebase and the mobile app. The trade-off: React Native's native module ecosystem is occasionally painful. Worth it for the code sharing.
+
+### PostgreSQL: Schema Design for Geo Data
+
+PostgreSQL's PostGIS extension provides native geospatial types and functions. Storing `VerificationPoint` locations as `POINT` and querying proximity with `ST_DWithin` is vastly cleaner than calculating Haversine distance in application code. This was the right call.
+
+## The Hard Parts Nobody Talks About
+
+### Offline Mode in React Native
+
+Field agents work in locations with poor connectivity. The app needs to queue verifications locally and sync when connectivity returns. Implementing reliable offline sync with conflict resolution in React Native is significantly harder than the documentation suggests. I used a local SQLite queue with idempotent sync operations.
+
+### Real-time Dashboards at Scale
+
+Pushing verification updates to the dashboard in real-time requires WebSockets or SSE. I chose SignalR on the .NET side — well-integrated with the existing stack. Scaling it requires careful connection management and a Redis backplane for multi-instance deployments.
+
+### Multi-tenant Data Isolation
+
+Every `Campaign`, `VerificationPoint`, and `Verification` belongs to an organization. PostgreSQL Row-Level Security policies enforce isolation at the database level, in addition to application-level tenant context. Defense in depth for sensitive client data.
+
+## Infrastructure: Azure from Day 1
+
+### Docker Compose to Azure App Service
+
+Local development runs on Docker Compose: API, database, and Redis in one command. Production runs on Azure App Service for the API and Azure Database for PostgreSQL. The containerized development environment made the Azure deployment straightforward.
+
+### The CI/CD Pipeline
+
+GitHub Actions handles CI: build, test, and push Docker images on every push to main. Azure App Service pulls the new image and restarts. No downtime deploys with health check endpoints.
+
+### Monitoring and Alerts
+
+Azure Application Insights for APM. Custom metrics for verification success rates, GPS validation failures, and sync queue depth. Alerts on error rate spikes and p95 latency.
+
+## What I'd Do Differently
+
+### The Mobile App Decision
+
+React Native was the right call for code sharing, but the development experience has friction that Swift/Kotlin wouldn't have. For a mobile-first product, I'd evaluate native development more seriously. The code sharing benefit is real — but the native performance and debugging experience has a cost.
+
+### Database Schema Regrets
+
+I modeled `Evidence` as a JSON column early on for flexibility. That flexibility became a liability when I needed to query specific evidence fields. Structured columns with nullable values would have been cleaner. Flexible schemas in relational databases are usually a trap.
+
+### Launching to One Industry First
+
+Multi-industry positioning was a marketing mistake as much as a technical one. "We work for outdoor advertising, insurance, and municipal" is a harder sell than "we solve outdoor advertising verification." I should have dominated one vertical before expanding.
+
+## Lessons for Other SaaS Builders
+
+Building a SaaS solo while working full-time teaches you to make decisions fast and live with them. The architecture survived because of DDD's discipline — not despite it. When the domain model is clear, adding features is additive. When it's muddy, every feature is a renegotiation of what the system is.
+
+The most valuable thing wasn't the tech stack. It was the clarity about what a "verified verification" actually means — and encoding that as an invariant in the domain, not a validation in the API.

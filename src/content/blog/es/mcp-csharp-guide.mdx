@@ -1,0 +1,119 @@
+---
+title: "Protocolo MCP en C#: Construyendo Tu Primer Servidor de Herramientas"
+description: "Una guía práctica para implementar el Model Context Protocol (MCP) en .NET — desde entender el protocolo hasta publicar un servidor de herramientas funcional."
+date: "2026-04-10"
+tags: ["MCP", "C#", ".NET", "IA", "Herramientas"]
+keywords: ["MCP C#", "Model Context Protocol .NET", "servidor MCP herramientas", "implementar MCP C#"]
+series: "IA + Software"
+---
+
+El Model Context Protocol se está convirtiendo silenciosamente en el estándar para conectar modelos de IA a herramientas externas. Si estás construyendo en .NET y querés que tus aplicaciones hablen nativamente con LLMs — este es el protocolo que tenés que conocer.
+
+Esta guía va de cero a un servidor MCP funcional en C#. Sin vaguedades, solo código y decisiones.
+
+## ¿Qué es MCP?
+
+### El Problema que Resuelve
+
+Sin un protocolo estándar, cada integración de IA es personalizada: escribís un adaptador para function calling de OpenAI, otro para tool use de Anthropic, otro para tu modelo interno. MCP define un contrato universal entre un host (la aplicación de IA), un client (el mediador) y un server (tus herramientas).
+
+Tu servidor de herramientas se vuelve un artefacto portátil. Construilo una vez, conectalo a cualquier host compatible con MCP.
+
+### Cómo se Compara MCP con REST/Function Calling
+
+Function calling pasa schemas de herramientas en el momento de la inferencia. MCP va más lejos: define cómo un servidor anuncia sus capacidades, cómo se invocan las herramientas, cómo se exponen recursos y cómo se templan los prompts. Es un protocolo de runtime, no solo un formato de schema.
+
+### La Arquitectura: Host, Client, Server
+
+- **Host**: la aplicación con el modelo de IA (Claude Desktop, tu app personalizada)
+- **Client**: mantenido por el host, maneja la negociación del protocolo
+- **Server**: tu código — expone herramientas, recursos y prompts sobre el protocolo
+
+## Configurando Tu Primer Servidor MCP en C#
+
+### Estructura del Proyecto y Dependencias
+
+```bash
+dotnet new console -n MiServidorMcp
+cd MiServidorMcp
+dotnet add package ModelContextProtocol
+```
+
+El paquete NuGet `ModelContextProtocol` provee el SDK del servidor. El proyecto es una app de consola estándar — el servidor se comunica via stdio o HTTP SSE.
+
+### Definiendo Tu Primera Herramienta
+
+```csharp
+[McpServerTool, Description("Obtiene el estado de verificación actual para un ID de campaña dado.")]
+public static async Task<string> GetCampaignStatus(
+    [Description("El identificador de la campaña")] string campaignId,
+    IVerificationService service)
+{
+    var status = await service.GetStatusAsync(campaignId);
+    return JsonSerializer.Serialize(status);
+}
+```
+
+Las herramientas son métodos estáticos simples decorados con `[McpServerTool]`. El SDK maneja la generación de schemas, el binding de argumentos y la propagación de errores.
+
+### Schemas de Input/Output de Herramientas
+
+El SDK genera schemas JSON desde las firmas de tus métodos automáticamente. Usá atributos `[Description]` para documentar parámetros — los LLMs usan estas descripciones para decidir cuándo y cómo llamar a tu herramienta.
+
+## Implementando Herramientas
+
+### Leyendo Contexto del Entorno
+
+Los servidores MCP pueden acceder a variables de entorno y configuración al inicio. Usá esto para credenciales, URLs base y feature flags — manteniendo la configuración fuera de las implementaciones de herramientas.
+
+### Llamando APIs Externas
+
+Inyectá `HttpClient` o tus servicios de dominio en métodos de herramientas via inyección de dependencias. El SDK soporta un contenedor DI estándar:
+
+```csharp
+var builder = McpServerBuilder.Create();
+builder.Services.AddSingleton<IVerificationService, VerificationService>();
+builder.AddTools<VerificationTools>();
+await builder.BuildAndRunAsync();
+```
+
+### Retornando Resultados Estructurados
+
+Retorná objetos serializables o strings. El host deserializa la respuesta y se la pasa al modelo. Para resultados complejos, retorná strings JSON — son universalmente parseables por cualquier modelo.
+
+## Conectando a un Host
+
+### Opciones de Transporte: stdio vs. HTTP SSE
+
+- **stdio**: más simple, funciona con Claude Desktop y MCP Inspector. El host levanta tu proceso.
+- **HTTP SSE**: mejor para escenarios multi-cliente y herramientas remotas. Requiere un listener HTTP.
+
+Para desarrollo, empezá con stdio. Agregá HTTP SSE cuando lo necesités.
+
+### Testeando con el MCP Inspector
+
+```bash
+npx @modelcontextprotocol/inspector dotnet run
+```
+
+El MCP Inspector es una UI en el navegador que se conecta a tu servidor, lista herramientas y te permite invocarlas manualmente. Esencial para desarrollo.
+
+### Debuggeando Llamadas a Herramientas
+
+Logeá cada invocación de herramienta con sus inputs y outputs. El no-determinismo en las llamadas a herramientas es difícil de reproducir — los logs estructurados son tu única superficie de debugging confiable.
+
+## Un Caso de Uso Real: Herramientas de Dominio de Track Signe
+
+### Consultando Registros de Verificación
+
+Un servidor MCP de Track Signe expone herramientas que permiten a un asistente de IA consultar datos de campañas, filtrar verificaciones por estado y agregar registros de evidencia — todo sin acceso directo a la base de datos.
+
+### Generando Reportes via MCP
+
+La herramienta de generación de reportes toma un ID de campaña y un rango de fechas, llama a la capa de application services existente y retorna un resumen estructurado. El modelo de IA decide cuándo llamarla basándose en el contexto de la conversación.
+
+## Próximos Pasos
+
+MCP sigue evolucionando, pero el patrón es sólido. A medida que madura el tooling de IA, tener un servidor MCP nativo en tu ecosistema .NET te pone a la vanguardia.
+
+Próximo artículo: cómo exponer una arquitectura DDD completa a través de MCP — manteniendo la lógica de dominio en application services mientras la hacés accesible a cualquier host de IA.

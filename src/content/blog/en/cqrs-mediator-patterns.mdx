@@ -1,0 +1,150 @@
+---
+title: "CQRS + Mediator in .NET: Patterns, Mistakes, and When to Use Them"
+description: "An honest look at CQRS and the Mediator pattern in .NET — what they actually solve, the mistakes developers make, and when you should (and shouldn't) use them."
+date: "2026-04-08"
+tags: ["CQRS", ".NET", "MediatR", "Architecture", "C#"]
+keywords: ["CQRS mediator C#", "MediatR .NET", "CQRS mistakes", "CQRS when to use"]
+series: "Architecture"
+---
+
+Everyone uses CQRS. Few people understand why. This article is an honest look at what the pattern actually solves, what MediatR brings to the table, and — most importantly — when you're better off without it.
+
+## CQRS Explained Without the Hype
+
+### The Core Idea: Reads Are Not Writes
+
+CQRS stands for Command Query Responsibility Segregation. The fundamental insight: operations that change state (commands) have different requirements than operations that read state (queries). They should be modeled separately.
+
+Commands care about correctness: invariants, transactions, domain rules. Queries care about performance: projections, joins, caching. Trying to optimize for both with the same model forces compromise.
+
+### Greg Young's Original Definition vs. What Most People Implement
+
+Greg Young's original CQRS was about having physically separate read and write models — potentially different databases, updated asynchronously via events. Most teams implement the simpler version: separate command and query code paths, same database. Both are valid. Know which one you're doing.
+
+### The Spectrum: From Simple Separation to Event Sourcing
+
+- **Level 0**: separate service methods for reads vs. writes
+- **Level 1**: separate models/DTOs for commands and queries
+- **Level 2**: separate handlers (CQRS with MediatR)
+- **Level 3**: separate read/write databases with eventual consistency
+- **Level 4**: event sourcing — the write side is an event log, the read side is materialized
+
+Most applications need Level 2. Very few need Level 4.
+
+## MediatR in .NET: What It Adds
+
+### The Mediator Pattern Recap
+
+The Mediator pattern decouples senders from receivers. Instead of `orderService.CreateOrder(cmd)`, you dispatch `await mediator.Send(cmd)`. The mediator resolves the handler. Your controller doesn't know what handles the command.
+
+### Commands, Queries, and Notifications
+
+MediatR defines three message types:
+- `IRequest<TResponse>`: a command or query expecting a result
+- `IRequest`: a command expecting no result
+- `INotification`: a domain event published to multiple handlers
+
+### The Pipeline: Where the Real Power Lives
+
+MediatR's `IPipelineBehavior<TRequest, TResponse>` lets you wrap every request with cross-cutting concerns:
+
+```csharp
+public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+{
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
+    {
+        var failures = _validators.SelectMany(v => v.Validate(request).Errors).ToList();
+        if (failures.Any()) throw new ValidationException(failures);
+        return await next();
+    }
+}
+```
+
+Logging, validation, performance monitoring, retry logic — all composable in the pipeline without touching your handlers.
+
+## Implementing It Right
+
+### Project Structure That Scales
+
+```
+Application/
+  Commands/
+    CreateCampaign/
+      CreateCampaignCommand.cs
+      CreateCampaignHandler.cs
+      CreateCampaignValidator.cs
+  Queries/
+    GetCampaignStatus/
+      GetCampaignStatusQuery.cs
+      GetCampaignStatusHandler.cs
+```
+
+One folder per use case. The feature is self-contained — command, handler, and validator together. Easy to find, easy to delete.
+
+### Validating Commands with Pipeline Behaviors
+
+Register FluentValidation validators and a validation pipeline behavior in your DI container. Every command gets validated automatically before the handler runs. Fail fast, fail early.
+
+### Returning Results: Success/Failure vs. Exceptions
+
+For expected failures (business rule violations, not-found entities), use a Result type instead of throwing exceptions:
+
+```csharp
+public record Result<T>(T? Value, string? Error, bool IsSuccess)
+{
+    public static Result<T> Ok(T value) => new(value, null, true);
+    public static Result<T> Fail(string error) => new(default, error, false);
+}
+```
+
+Exceptions bubble up accidentally. Result types make failure explicit in the handler signature.
+
+## Common Mistakes
+
+### Using CQRS as a Naming Convention, Not an Architecture
+
+Renaming your service methods `GetXxxQuery` and `UpdateXxxCommand` without actually separating your models is not CQRS. It's CQRS cosplay. The value comes from actually using different models for reads and writes.
+
+### Bloated Handlers
+
+Handlers should orchestrate, not implement. A 200-line handler is a service class in disguise. Move domain logic into the domain, cross-cutting concerns into behaviors, and shared orchestration into domain services.
+
+### Ignoring Read Model Design
+
+The read side is not a mirror of your domain model. Design your query DTOs for the UI that consumes them. Denormalize aggressively. A query that joins 5 tables to build what the frontend needs is a signal to redesign the read model.
+
+## When NOT to Use CQRS
+
+### Simple CRUD Applications
+
+If your application is primarily create/read/update/delete with no real business rules, CQRS adds ceremony with no payoff. Minimal APIs with service classes or simple MVC controllers are the right tool.
+
+### Small Teams with Low Complexity
+
+CQRS adds indirection. Every new feature requires a command, a handler, and often a validator. On a small team building something simple, this slows you down. Start simpler.
+
+### The Over-engineering Trap
+
+The worst version of CQRS is when it's adopted because "it's what senior devs do" rather than because the domain complexity warrants it. Architecture should serve the problem, not signal sophistication.
+
+## Alternatives to Consider
+
+### Vertical Slice Architecture
+
+Instead of organizing by technical layer (Controllers, Services, Repositories), organize by feature. Each feature is a self-contained vertical slice: controller, handler, data access, all in one folder. Jimmy Bogard's approach — compatible with MediatR or without it.
+
+### Minimal APIs with Service Classes
+
+For straightforward applications, a service class per domain concept is clear, testable, and maintainable. No mediator, no behaviors, no ceremony.
+
+### When MVC Is Still the Right Answer
+
+Fat controllers are bad. But thin controllers with injected services — standard MVC — is perfectly good architecture for many applications. Don't abandon the familiar for the fashionable.
+
+## Conclusion
+
+CQRS is a tool. Like any tool, it's only useful when applied to the right problem.
+
+The metric I use: if your read and write concerns are genuinely different enough to warrant separate models — in terms of validation, data shape, or optimization strategy — CQRS earns its complexity. Otherwise, start simpler and migrate when the pain of not having it exceeds the cost of adding it.
+
+MediatR is excellent once you've decided on CQRS. Its pipeline behavior system is worth the dependency alone. But it's a library, not a substitute for thinking about your architecture.

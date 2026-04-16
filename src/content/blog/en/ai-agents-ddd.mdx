@@ -1,0 +1,83 @@
+---
+title: "AI Agents within DDD: A New Way of Thinking Software"
+description: "How AI agents fit naturally into Domain-Driven Design workflows — and why thinking about them as domain services changes everything."
+date: "2026-04-15"
+tags: ["AI", "DDD", "Architecture", "Agents"]
+keywords: ["AI agents DDD", "domain driven design AI", "AI software architecture", "AI agents .NET"]
+series: "AI + Software"
+---
+
+There's a moment in every AI-heavy project where you realize the models aren't the hard part. The hard part is the same thing it's always been: **understanding the domain**.
+
+Domain-Driven Design gives us the vocabulary. AI agents give us a new kind of actor inside that vocabulary. This article explores how they fit together — and why the combination is more powerful than either alone.
+
+## What Changes When You Bring AI into DDD
+
+### The Agent as a Domain Participant
+
+Traditional DDD defines participants in a domain: entities, services, repositories. An AI agent is none of these by default — but it can map cleanly onto them when you're deliberate about where it lives in your architecture.
+
+The key question isn't "what model am I using?" — it's "what domain responsibility does this agent own?"
+
+### Intent vs. Instruction: How LLMs Speak the Ubiquitous Language
+
+LLMs don't operate on commands, they operate on intent. This maps surprisingly well to DDD's concept of the Ubiquitous Language: when the prompt speaks the language of the domain, the model responds in kind. If your domain model is well-defined, writing prompts becomes an act of specification.
+
+### Bounded Contexts and Agent Scope
+
+Every agent should have a bounded context. An agent that answers questions about shipping shouldn't also know about billing. The same rules that govern service decomposition govern agent scope.
+
+## Modeling AI Agents as Domain Services
+
+### The Application Service Pattern Applied to Agents
+
+An AI agent behaves like an application service: it receives a use case (a command or query), executes logic (in this case, inference), and returns a result the domain can reason about. Wrapping agents in application services keeps your domain clean.
+
+### Input/Output Contracts: Keeping the Domain Clean
+
+Define typed interfaces for what goes into an agent and what comes out. Avoid passing raw strings around — model the inputs as domain objects and validate outputs before they touch your domain entities.
+
+### Error Handling and Fallback Strategies
+
+AI responses are non-deterministic. Your domain should treat them as such: define explicit failure modes, fallback paths, and validation gates before any agent output modifies domain state.
+
+## A Practical Example in .NET
+
+### Setting Up the Agent Interface
+
+```csharp
+public interface IVerificationAgent
+{
+    Task<VerificationAnalysis> AnalyzeAsync(VerificationContext context);
+}
+```
+
+The domain doesn't know about OpenAI, Anthropic, or any specific model. It knows about `IVerificationAgent` and `VerificationAnalysis`.
+
+### Integrating with a Command Handler (CQRS)
+
+The agent gets injected into the command handler via DI. The handler validates the command, builds the context, calls the agent, validates the result, and dispatches domain events. The model is an implementation detail.
+
+### Testing Agent Behavior in Isolation
+
+Because the agent is behind an interface, you can mock it in domain tests. You test the handler's behavior with deterministic mock responses — and test the real agent integration separately.
+
+## Pitfalls to Avoid
+
+### Don't Let the Model Bleed into the Domain
+
+Never let model-specific concepts (tokens, temperature, prompt templates) surface in your domain layer. Keep them in the infrastructure adapter.
+
+### Determinism vs. Probabilistic Behavior
+
+DDD assumes operations are deterministic enough to be reasoned about. AI agents introduce probabilism. Design your domain to handle uncertainty: use confidence thresholds, human-in-the-loop patterns, and explicit "uncertain" states in your domain model.
+
+### The Prompt as a Specification
+
+Think of your system prompt as a specification document. If you can't describe what the agent should do in precise domain terms, your domain model isn't ready for AI yet.
+
+## Conclusion
+
+The mental model that works best: **AI agents are non-deterministic domain services**. They receive a command, execute within boundaries you define, and return a result your domain can reason about. DDD gives you the structure. The agent provides the intelligence.
+
+Start with a well-modeled domain. Add agents where the non-deterministic intelligence of a language model genuinely replaces something expensive or impossible to code deterministically. The architecture does the rest.

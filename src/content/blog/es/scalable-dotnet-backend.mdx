@@ -1,0 +1,151 @@
+---
+title: "Diseñando un Backend .NET Escalable desde Cero"
+description: "Una guía práctica para construir backends .NET escalables usando Clean Architecture, DDD y CQRS — con decisiones reales de sistemas en producción."
+date: "2026-04-05"
+tags: ["Arquitectura", ".NET", "DDD", "CQRS", "C#"]
+keywords: ["backend .NET escalable", "clean architecture C#", "DDD CQRS .NET", "arquitectura backend dotnet"]
+series: "Arquitectura"
+---
+
+La mayoría de los tutoriales de backend te muestran cómo construir algo. Pocos te muestran cómo construir algo que dure. Este artículo es sobre el segundo tipo.
+
+Voy a recorrer las decisiones arquitectónicas que aplico cuando arranco un nuevo backend .NET — desde la estructura del proyecto hasta los patrones CQRS — con el razonamiento detrás de cada elección.
+
+## La Base: Por Qué la Arquitectura Importa Antes de la Línea 1
+
+### El Costo de Equivocarse Temprano
+
+Un modelo de datos incorrecto es barato de arreglar en la semana uno. Costoso en el mes seis. Las decisiones de arquitectura — cómo se comunican las capas, dónde vive la lógica de negocio, cómo se modela el dominio — se componen con el tiempo. Aclararlas temprano no es sobre-ingeniería; es inversión.
+
+### Arquitectura en Capas vs. Clean Architecture: La Diferencia Real
+
+La arquitectura en capas impone dirección (UI → BLL → DAL). Clean Architecture impone inversión de dependencias: el dominio no sabe nada de lo que está afuera. La infraestructura se adapta al dominio, no al revés.
+
+Para la mayoría de los backends .NET, Clean Architecture vale el costo de configuración. El dominio se vuelve testeable en aislamiento, la infraestructura intercambiable y la capa de aplicación una especificación clara de lo que el sistema hace.
+
+### Cuándo Usar Qué
+
+Paneles de administración con mucho CRUD: arquitectura en capas o Minimal APIs con service classes está bien. Dominios complejos con reglas de negocio ricas: Clean Architecture + DDD. Elegí basándote en la complejidad del negocio, no en la preferencia personal.
+
+## Los Bloques de Construcción de Domain-Driven Design
+
+### Entidades, Value Objects y Agregados
+
+- **Entidad**: tiene identidad, estado mutable. Ejemplo: `Verificacion` con un ID.
+- **Value Object**: no tiene identidad, se define por sus valores. Ejemplo: `CoordenadaGPS(lat, lng)`.
+- **Agregado**: un conjunto de entidades y value objects con una raíz que impone invariantes. Ejemplo: agregado `Campaña` con entidades `Verificacion` hijas.
+
+Mantené los agregados pequeños. El error común es hacer un agregado tan grande que se convierte en un objeto dios.
+
+### Eventos de Dominio y Cómo Publicarlos
+
+Los eventos de dominio representan cosas que pasaron en el dominio. `VerificacionCompletada`, `CampañaCerrada`. Lanzalos dentro de los métodos del agregado, recogelos antes de guardar, despachalos después de que la transacción se confirme.
+
+```csharp
+public class Campaña : AggregateRoot
+{
+    public void CompletarVerificacion(VerificacionId id, Evidencia evidencia)
+    {
+        var verificacion = _verificaciones.Get(id);
+        verificacion.Completar(evidencia);
+        LanzarEventoDominio(new VerificacionCompletada(Id, id, evidencia));
+    }
+}
+```
+
+### El Patrón Repository Bien Implementado
+
+Los repositorios abstraen la persistencia solo para agregados — no para cada tabla. Un repositorio por raíz de agregado. Mantené los métodos de consulta mínimos en el repositorio; usá modelos de lectura y query handlers para lecturas complejas.
+
+## CQRS con MediatR
+
+### Separando Comandos de Queries
+
+Los comandos cambian estado. Los queries leen estado. Tienen diferentes presiones de optimización — no uses el mismo modelo para ambos. Los comandos pasan por tu dominio. Los queries pueden saltear el dominio y acceder al modelo de lectura directamente.
+
+### El Patrón Handler
+
+```csharp
+public class CompletarVerificacionHandler : IRequestHandler<CompletarVerificacionCommand, Result>
+{
+    public async Task<Result> Handle(CompletarVerificacionCommand cmd, CancellationToken ct)
+    {
+        var campaña = await _campañas.GetAsync(cmd.CampañaId, ct);
+        campaña.CompletarVerificacion(cmd.VerificacionId, cmd.Evidencia);
+        await _campañas.SaveAsync(campaña, ct);
+        return Result.Ok();
+    }
+}
+```
+
+El handler orquesta, el dominio decide, el repositorio persiste. Cada capa tiene un trabajo.
+
+### Validación con FluentValidation
+
+Validá los comandos en el límite de la aplicación antes de que lleguen al dominio. Usá pipeline behaviors de MediatR para ejecutar FluentValidation automáticamente en cada comando. Las invariantes del dominio son una segunda línea de defensa — no deberían ser la única.
+
+## La Capa de Aplicación
+
+### Casos de Uso como Application Services
+
+Cada command handler mapea a un caso de uso. Los nombres importan: `CompletarVerificacionCommand`, `CrearCampañaCommand`, `GenerarReporteQuery`. Leer tus handlers debería leer como una tabla de contenidos de lo que el sistema hace.
+
+### Mapeo Entre Capas
+
+AutoMapper reduce el boilerplate pero agrega magia. El mapeo manual es verboso pero explícito. Mi regla: usá AutoMapper para DTOs simples. Escribí mappers manuales cuando la transformación tiene lógica real — esa lógica pertenece en algún lugar visible.
+
+### Manejo de Errores que Tiene Sentido
+
+Usá el patrón Result en vez de excepciones para fallas esperadas. Las excepciones son para estados inesperados. Un comando que falla porque una campaña ya está cerrada no es excepcional — es un resultado de negocio válido. Retorná un resultado de falla tipado.
+
+## Un Ejemplo Real: La API de Verificación de Track Signe
+
+### El Modelo de Dominio
+
+`Campaña` es la raíz del agregado. Posee una colección de entidades `Verificacion`. Cada `Verificacion` tiene una `CoordenadaGPS`, una referencia `EvidenciaFotografica` y un value object `EstadoVerificacion`.
+
+### Un Flujo de Comando de Punta a Punta
+
+1. Controlador recibe request HTTP → crea `CompletarVerificacionCommand`
+2. MediatR despacha a `CompletarVerificacionHandler`
+3. Handler carga agregado `Campaña` via repositorio
+4. Llama a `campaña.CompletarVerificacion(...)` → invariantes del dominio corren → evento de dominio lanzado
+5. Repositorio guarda el agregado → EF Core mapea a la base de datos
+6. Eventos de dominio despachados → integraciones notificadas
+
+### Testing Unitario del Dominio
+
+```csharp
+[Fact]
+public void CompletarVerificacion_ConEvidenciaValida_LanzaEvento()
+{
+    var campaña = CampañaFactory.Activa();
+    var verificacionId = campaña.Verificaciones.First().Id;
+
+    campaña.CompletarVerificacion(verificacionId, Evidencia.Valida());
+
+    campaña.EventosDominio.Should().ContainSingle<VerificacionCompletada>();
+}
+```
+
+Sin base de datos, sin HTTP. Lógica de dominio pura testeada en aislamiento.
+
+## Errores Comunes
+
+### Controladores Gordos
+
+Los controladores deben ser orquestadores delgados. Si tu controlador tiene más de 20 líneas de lógica, esa lógica pertenece en un handler o servicio de dominio.
+
+### Modelos de Dominio Anémicos
+
+Un modelo de dominio anémico tiene entidades con solo propiedades y sin comportamiento. Toda la lógica termina en clases de servicio. El dominio se convierte en una bolsa de datos. Solucionalo moviendo el comportamiento de vuelta a entidades y agregados.
+
+### Sobre-ingeniería desde el Día 1
+
+No todo proyecto necesita Clean Architecture. No todo dominio necesita DDD. Empezá con la arquitectura más simple que pueda sobrevivir la complejidad que sabés que viene — no la complejidad que imaginás que podría venir.
+
+## Conclusión
+
+Un backend .NET bien diseñado no ocurre por accidente. Viene de decisiones deliberadas tomadas temprano — sobre límites, responsabilidades y dónde vive la lógica de negocio.
+
+Empezá con el dominio. Modelá lo que el negocio hace antes de pensar en cómo persistir o exponer. La arquitectura sigue al modelo de dominio, no al revés.

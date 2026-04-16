@@ -1,0 +1,83 @@
+---
+title: "Agentes IA dentro de DDD: Una Nueva Forma de Pensar el Software"
+description: "Cómo los agentes de IA encajan naturalmente en los flujos de Domain-Driven Design — y por qué pensarlos como servicios de dominio cambia todo."
+date: "2026-04-15"
+tags: ["IA", "DDD", "Arquitectura", "Agentes"]
+keywords: ["agentes IA DDD", "domain driven design IA", "arquitectura software IA", "agentes IA .NET"]
+series: "IA + Software"
+---
+
+Hay un momento en todo proyecto con mucha IA donde te das cuenta de que los modelos no son la parte difícil. La parte difícil es lo de siempre: **entender el dominio**.
+
+Domain-Driven Design nos da el vocabulario. Los agentes de IA nos dan un nuevo tipo de actor dentro de ese vocabulario. Este artículo explora cómo encajan — y por qué la combinación es más poderosa que cualquiera de los dos por separado.
+
+## Qué Cambia Cuando Traés IA al DDD
+
+### El Agente como Participante del Dominio
+
+El DDD tradicional define participantes en un dominio: entidades, servicios, repositorios. Un agente de IA no es ninguno de estos por defecto — pero puede mapearse limpiamente en ellos cuando sos deliberado sobre dónde vive en tu arquitectura.
+
+La pregunta clave no es "¿qué modelo estoy usando?" — es "¿qué responsabilidad del dominio tiene este agente?"
+
+### Intención vs. Instrucción: Cómo los LLMs Hablan el Lenguaje Ubicuo
+
+Los LLMs no operan sobre comandos, operan sobre intención. Esto mapea sorprendentemente bien con el concepto de Lenguaje Ubicuo del DDD: cuando el prompt habla el lenguaje del dominio, el modelo responde en consecuencia. Si tu modelo de dominio está bien definido, escribir prompts se convierte en un acto de especificación.
+
+### Bounded Contexts y el Alcance del Agente
+
+Cada agente debería tener un bounded context. Un agente que responde preguntas sobre envíos no debería saber también sobre facturación. Las mismas reglas que gobiernan la descomposición de servicios gobiernan el alcance del agente.
+
+## Modelando Agentes IA como Servicios de Dominio
+
+### El Patrón Application Service Aplicado a Agentes
+
+Un agente IA se comporta como un application service: recibe un caso de uso (un comando o query), ejecuta lógica (en este caso, inferencia), y retorna un resultado que el dominio puede razonar. Envolver agentes en application services mantiene tu dominio limpio.
+
+### Contratos de Input/Output: Manteniendo el Dominio Limpio
+
+Define interfaces tipadas para lo que entra al agente y lo que sale. Evitá pasar strings crudos — modela los inputs como objetos de dominio y validá los outputs antes de que toquen tus entidades de dominio.
+
+### Manejo de Errores y Estrategias de Fallback
+
+Las respuestas de IA son no-deterministas. Tu dominio debería tratarlas como tal: define modos de falla explícitos, caminos de fallback y gates de validación antes de que cualquier output del agente modifique el estado del dominio.
+
+## Un Ejemplo Práctico en .NET
+
+### Configurando la Interfaz del Agente
+
+```csharp
+public interface IVerificationAgent
+{
+    Task<VerificationAnalysis> AnalyzeAsync(VerificationContext context);
+}
+```
+
+El dominio no sabe sobre OpenAI, Anthropic, ni ningún modelo específico. Sabe sobre `IVerificationAgent` y `VerificationAnalysis`.
+
+### Integrando con un Command Handler (CQRS)
+
+El agente se inyecta en el command handler via DI. El handler valida el comando, construye el contexto, llama al agente, valida el resultado y despacha eventos de dominio. El modelo es un detalle de implementación.
+
+### Testeando el Comportamiento del Agente en Aislamiento
+
+Como el agente está detrás de una interfaz, podés mockearlo en tests de dominio. Testeás el comportamiento del handler con respuestas mock deterministas — y testeás la integración con el agente real por separado.
+
+## Errores a Evitar
+
+### No Dejes que el Modelo se Filtre al Dominio
+
+Nunca expongas conceptos específicos del modelo (tokens, temperatura, plantillas de prompt) en tu capa de dominio. Mantené esos en el adaptador de infraestructura.
+
+### Determinismo vs. Comportamiento Probabilístico
+
+DDD asume que las operaciones son suficientemente deterministas para razonar sobre ellas. Los agentes de IA introducen probabilismo. Diseñá tu dominio para manejar la incertidumbre: usá umbrales de confianza, patrones human-in-the-loop y estados "incierto" explícitos en tu modelo de dominio.
+
+### El Prompt como Especificación
+
+Pensá en tu system prompt como un documento de especificación. Si no podés describir lo que el agente debe hacer en términos precisos del dominio, tu modelo de dominio no está listo para IA todavía.
+
+## Conclusión
+
+El modelo mental que mejor funciona: **los agentes IA son servicios de dominio no-deterministas**. Reciben un comando, ejecutan dentro de límites que vos definís y retornan un resultado que tu dominio puede razonar.
+
+Empezá con un dominio bien modelado. Agregá agentes donde la inteligencia no-determinista de un modelo de lenguaje genuinamente reemplaza algo costoso o imposible de codificar de forma determinista. La arquitectura hace el resto.
