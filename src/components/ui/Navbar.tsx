@@ -3,16 +3,23 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const navItems = [
+const anchorItems = [
   { key: "about", href: "#about" },
+  { key: "thinking", href: "#thinking" },
   { key: "experience", href: "#experience" },
   { key: "projects", href: "#projects" },
   { key: "techStack", href: "#tech-stack" },
   { key: "education", href: "#education" },
   { key: "contact", href: "#contact" },
-] as const;
+];
+
+// const routeItems = [
+//   { key: "blog", href: "/blog" },
+// ];
 
 export default function Navbar() {
   const t = useTranslations("nav");
@@ -40,17 +47,24 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <a href="#" className="group flex items-center gap-2">
-            <span className="text-xl font-bold bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">
-              GA
-            </span>
-            <span className="hidden sm:block text-sm text-muted group-hover:text-foreground transition-colors">
+            <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
+              <Image
+                src="/images/avatar.png"
+                alt="Gabriel Angione"
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+                priority
+              />
+            </div>
+            <span className="sm:block text-sm text-muted group-hover:text-foreground transition-colors">
               gangione.dev
             </span>
           </a>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">
-            {navItems.map(({ key, href }) => (
+            {anchorItems.map(({ key, href }) => (
               <a
                 key={key}
                 href={href}
@@ -59,6 +73,15 @@ export default function Navbar() {
                 {t(key)}
               </a>
             ))}
+            {/* {routeItems.map(({ key, href }) => (
+              <Link
+                key={key}
+                href={href}
+                className="px-3 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/5"
+              >
+                {t(key)}
+              </Link>
+            ))} */}
             <div className="ml-3 pl-3 border-l border-white/10">
               <LanguageSwitcher />
             </div>
@@ -101,7 +124,7 @@ export default function Navbar() {
             className="md:hidden bg-cosmic-900/95 backdrop-blur-xl border-b border-white/5"
           >
             <div className="px-4 py-4 space-y-1">
-              {navItems.map(({ key, href }) => (
+              {anchorItems.map(({ key, href }) => (
                 <a
                   key={key}
                   href={href}
@@ -111,6 +134,16 @@ export default function Navbar() {
                   {t(key)}
                 </a>
               ))}
+              {/* {routeItems.map(({ key, href }) => (
+                <Link
+                  key={key}
+                  href={href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2 text-sm text-muted hover:text-foreground rounded-lg hover:bg-white/5"
+                >
+                  {t(key)}
+                </Link>
+              ))} */}
             </div>
           </motion.div>
         )}

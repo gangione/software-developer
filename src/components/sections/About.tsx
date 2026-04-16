@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -8,10 +9,16 @@ import SectionHeading from "@/components/ui/SectionHeading";
 
 const stats = ["years", "projects", "roles"] as const;
 
-const PROFILE_PHOTO = "/images/profile.png"; // Replace with "/images/profile.jpg" when available
-
 export default function About() {
   const t = useTranslations("about");
+  const [flipAngle, setFlipAngle] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setFlipAngle((prev) => prev + 180);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <SectionWrapper id="about">
@@ -20,32 +27,50 @@ export default function About() {
       <div className="grid lg:grid-cols-5 gap-12 items-start">
         {/* Text content */}
         <div className="lg:col-span-3 space-y-6">
-          {/* Profile photo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="float-right ml-6 mb-4 hidden lg:block"
+          {/* Profile photo — coin flip between caricature and real photo */}
+          <div
+            className="flex justify-center mb-6 lg:float-right lg:ml-6 lg:mb-4"
+            style={{ perspective: 900 }}
           >
-            <div className="relative w-40 h-40 rounded-2xl overflow-hidden border border-white/10 shadow-lg shadow-accent-blue/5">
-              {PROFILE_PHOTO ? (
-                <Image
-                  src={PROFILE_PHOTO}
-                  alt="Gabriel Angione"
-                  fill
-                  className="object-cover"
-                  sizes="160px"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-accent-blue/20 via-accent-purple/20 to-accent-gold/20 flex items-center justify-center">
-                  <span className="text-4xl font-bold bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">
-                    GA
-                  </span>
-                </div>
-              )}
-            </div>
-          </motion.div>
+            <motion.div
+              animate={{ rotateY: flipAngle }}
+              transition={{
+                duration: 1.1,
+                ease: [0.4, 0, 0.2, 1],
+              }}
+              style={{ transformStyle: "preserve-3d" }}
+              className="relative w-32 h-32 lg:w-40 lg:h-40"
+            >
+              {/* Front face — caricature */}
+              <Image
+                src="/images/profile.png"
+                alt="Gabriel Angione"
+                fill
+                sizes="160px"
+                className="object-contain"
+                style={{
+                  backfaceVisibility: "hidden",
+                  filter:
+                    "drop-shadow(0 0 14px rgba(59,130,246,0.45)) drop-shadow(0 0 5px rgba(139,92,246,0.3))",
+                }}
+                priority
+              />
+              {/* Back face — avatar */}
+              <Image
+                src="/images/avatar.png"
+                alt="Gabriel Angione"
+                fill
+                sizes="160px"
+                className="object-contain"
+                style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                  filter:
+                    "drop-shadow(0 0 14px rgba(59,130,246,0.45)) drop-shadow(0 0 5px rgba(139,92,246,0.3))",
+                }}
+              />
+            </motion.div>
+          </div>
 
           {(["p1", "p2", "p3", "p4"] as const).map((key, i) => (
             <motion.p
