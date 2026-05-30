@@ -119,6 +119,7 @@
     "techLead": "Tech Lead",
     "developer": "Developer",
     "viewCaseStudy": "View Case Study",
+    "dragHint": "Drag or scroll horizontally to browse",
     "items": {
       "trackSigne": {
         "title": "Track Signe",
@@ -246,6 +247,7 @@
     "viewLive": "View Live",
     "viewCode": "View Code",
     "caseStudy": "Case Study",
+    "downloadReport": "Download Full Report (PDF)",
     "items": {
       "trackSigne": {
         "headline": "Building intelligent verification for public spaces",
@@ -362,35 +364,132 @@
         "headline": "A warehouse management system built at UBA",
         "problem": {
           "title": "The Context",
-          "content": "Academic project at UBA's Faculty of Economic Sciences — a real-world warehouse and logistics simulation built with C# and WinForms."
+          "content": "Academic project at UBA's Faculty of Economic Sciences — a real-world warehouse and logistics simulation built with C# and WinForms, covering the full software engineering lifecycle from requirements to tested implementation."
         },
         "solution": {
           "title": "The Solution",
-          "content": "Pampazon implements a complete warehouse management system with deposit management, operations module, and full test case validation coverage."
+          "content": "Pampazon is a desktop WMS that manages the complete inbound/outbound warehouse cycle: receiving merchandise, generating preparation and selection orders, packaging, dispatching, and producing consignment notes — all with full test case coverage."
         },
         "architecture": {
           "title": "Architecture",
           "points": [
-            "C# WinForms desktop application",
-            ".NET Framework with layered architecture",
-            "Comprehensive unit test coverage"
+            "C# WinForms desktop application with MVC separation (Model / View / Controller)",
+            "Entities: OrdenDePreparacion, OrdenDeSeleccion, MercaderiaEnStock, Transportista, Remito, OrdenDeEntrega, Cliente",
+            "File-based persistence via Repository pattern — no database dependency",
+            "State machine for order lifecycle: Pendiente → EnSeleccion → EnPreparacion → Preparada → Despachada",
+            "Service layer encapsulates business logic; Views only invoke Controllers",
+            "MSTest unit tests covering all 5 main flows with happy-path and invalid-input scenarios"
           ]
         },
         "decisions": {
           "title": "Key Decisions",
           "points": [
-            "WinForms for rapid UI development in a desktop context",
-            "Layered architecture to practice separation of concerns",
-            "Test-first approach for operations module validation"
+            "WinForms chosen per course requirements — focus on software engineering methodology, not web stack",
+            "MVC pattern enforced to practice separation of concerns in a desktop context",
+            "File-based persistence to avoid database setup overhead; Repository pattern keeps storage swappable",
+            "Test cases designed before implementation to drive behaviour specifications",
+            "DFD-driven design: Context Diagram → DFD1–4 decomposition before any line of code"
           ]
         },
         "impact": {
           "title": "Outcome",
           "metrics": [
-            { "value": "Open Source", "label": "Available on GitHub" },
-            { "value": "Academic", "label": "UBA graded project" }
+            { "value": "Open Source", "label": "Full source on GitHub" },
+            { "value": "8-person team", "label": "Collaborative academic project" },
+            { "value": "5 use cases", "label": "End-to-end warehouse flows implemented" },
+            { "value": "7 phases", "label": "Full SDLC from DFD to test cases" }
           ]
-        }
+        },
+        "courseContext": {
+          "title": "Course Context",
+          "course": "Construcción de Aplicaciones Informáticas (CAI)",
+          "courseLabel": "Course",
+          "institution": "University of Buenos Aires — Faculty of Economic Sciences",
+          "institutionLabel": "Institution",
+          "group": "Group A",
+          "groupLabel": "Group",
+          "semester": "2nd Semester 2024",
+          "semesterLabel": "Semester",
+          "teamSize": "8-member team",
+          "teamSizeLabel": "Team",
+          "professors": "Alejandro Luis Mendez Cerezuela & Andrés Panitsch",
+          "professorsLabel": "Professors"
+        },
+        "processTitle": "Development Process",
+        "phases": [
+          {
+            "step": "01",
+            "title": "Requirements & Context Diagram",
+            "description": "Captured system boundaries through a Context Diagram (DC) identifying 7 external entities: Client, Board & Investors, Staff, Carrier, Bank, Supplier, and AFIP (tax authority). Defined information flows between each entity and the system."
+          },
+          {
+            "step": "02",
+            "title": "DFD Level 1 — System Overview",
+            "description": "Decomposed the system into 6 top-level subsystems: Gestión Operativa (Warehouse Ops), Ventas (Sales), Compras e Infraestructura (Procurement), Finanzas (Finance), Recursos Humanos (HR), and Planificación (Planning). Identified shared data stores and inter-process flows."
+          },
+          {
+            "step": "03",
+            "title": "DFD Levels 2 & 3 — Warehouse Decomposition",
+            "description": "Zoomed into Gestión Operativa: Level 2 split it into 'AA Gestión de Almacén' and 'AB Administración y Control'. Level 3 broke the warehouse process into 4 sub-processes: AAA Despacho (Dispatch), AAB Preparación (Preparation), AAC Almacenaje (Storage), and AAD Recepción (Receiving)."
+          },
+          {
+            "step": "04",
+            "title": "DFD Level 4 — Dispatch Detail",
+            "description": "Fully decomposed the Dispatch sub-process into atomic operations: AAA.1 Validar identidad del transportista (carrier identity verification), AAA.2 Confirmar despacho (dispatch confirmation), and AAA.3 Generar y entregar Remito (generate & hand over consignment note). Identified all data stores accessed."
+          },
+          {
+            "step": "05",
+            "title": "Use Cases & WinForms Prototypes",
+            "description": "Documented 5 use cases with actor descriptions, pre/post-conditions, normal and alternative flows. Designed WinForms screen wireframes for each flow — Prep Order, Selection Order, Stock Reduction, Delivery Order, and Dispatch with Remito generation."
+          },
+          {
+            "step": "06",
+            "title": "Class Diagram & Sequence Diagrams",
+            "description": "Built the full class diagram with 10+ domain entities and their relationships. Documented 4 sequence diagrams tracing message flows between UI, Controllers, Services, and Repositories for the core use cases. Formalized the OPEstado state machine."
+          },
+          {
+            "step": "07",
+            "title": "Implementation & Test Cases",
+            "description": "Implemented the complete WinForms application in C# following the MVC design from prior phases. Wrote test case matrices for all 5 flows covering happy paths, invalid inputs, and boundary conditions. Final submission included source code, executable, and full documentation."
+          }
+        ],
+        "systemTitle": "System Design Highlights",
+        "systemPoints": [
+          "Context Diagram connects 7 external entities through well-defined information flows",
+          "DFD hierarchy spans 4 levels — from system overview down to atomic dispatch operations",
+          "Order lifecycle enforced as a state machine: Pendiente → EnSeleccion → EnPreparacion → Preparada → Despachada",
+          "Repository pattern abstracts file-based storage, keeping domain logic independent of persistence",
+          "MVC architecture separates WinForms views from business rules — Controllers mediate all interactions",
+          "Call-return diagram documents inter-module dependencies for the full application"
+        ],
+        "useCasesTitle": "Use Cases Implemented",
+        "useCases": [
+          {
+            "actor": "Asistente de Operaciones",
+            "title": "Orden de Preparación",
+            "description": "Register a new preparation order, select the required merchandise from stock, and assign a carrier for the shipment."
+          },
+          {
+            "actor": "Jefe de Preparación",
+            "title": "Orden de Selección",
+            "description": "Filter pending preparation orders, validate readiness, and generate a selection order that groups items by warehouse location."
+          },
+          {
+            "actor": "Jefe de Selección",
+            "title": "Baja de Stock",
+            "description": "Confirm that selected items have been physically pulled from shelves, reduce stock quantities, and advance the preparation order to 'En Preparación' status."
+          },
+          {
+            "actor": "Empaquetador",
+            "title": "Orden de Entrega",
+            "description": "Confirm that the order has been fully packaged and is ready for dispatch, transitioning it to 'Preparada' status."
+          },
+          {
+            "actor": "Jefe de Despacho",
+            "title": "Despacho y Generación de Remito",
+            "description": "Validate carrier identity, confirm physical handover of the shipment, mark the order as 'Despachada', and automatically generate and print the consignment note (Remito)."
+          }
+        ]
       }
     }
   }

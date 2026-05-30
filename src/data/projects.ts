@@ -31,6 +31,6 @@ export const projects = [
     image: "/images/projects/pampazon.png",
     badge: "developer",
     github: "https://github.com/gangione/Pampazon",
-    featured: false,
+    featured: true,
   },
 ] as const;

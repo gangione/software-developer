@@ -119,6 +119,7 @@
     "techLead": "Tech Lead",
     "developer": "Desarrollador",
     "viewCaseStudy": "Ver Caso de Estudio",
+    "dragHint": "Deslizá o scrolleá horizontalmente para navegar",
     "items": {
       "trackSigne": {
         "title": "Track Signe",
@@ -246,6 +247,7 @@
     "viewLive": "Ver en Vivo",
     "viewCode": "Ver Código",
     "caseStudy": "Caso de Estudio",
+    "downloadReport": "Descargar Entrega Final (PDF)",
     "items": {
       "trackSigne": {
         "headline": "Construyendo verificación inteligente para espacios públicos",
@@ -358,38 +360,135 @@
         }
       },
       "pampazon": {
-        "headline": "Sistema de gestión de depósitos construido para la UBA",
+        "headline": "Sistema de gestión de depósitos construido en la UBA",
         "problem": {
           "title": "El Contexto",
-          "content": "Proyecto académico en la Facultad de Ciencias Económicas de la UBA — una simulación real de almacén y logística construida con C# y WinForms."
+          "content": "Proyecto académico en la Facultad de Ciencias Económicas de la UBA — una simulación real de almacén y logística construida con C# y WinForms, abarcando el ciclo completo de ingeniería de software desde los requerimientos hasta la implementación con pruebas."
         },
         "solution": {
           "title": "La Solución",
-          "content": "Pampazon implementa un sistema completo de gestión de depósitos con gestión de almacenes, módulo de operaciones y cobertura completa de validación de casos de prueba."
+          "content": "Pampazon es un WMS de escritorio que gestiona el ciclo completo de entrada y salida del depósito: recepción de mercadería, generación de órdenes de preparación y selección, empaquetado, despacho y emisión de remitos — con cobertura total de casos de prueba."
         },
         "architecture": {
           "title": "Arquitectura",
           "points": [
-            "Aplicación de escritorio C# WinForms",
-            ".NET Framework con arquitectura por capas",
-            "Cobertura completa de tests unitarios"
+            "Aplicación de escritorio C# WinForms con separación MVC (Modelo / Vista / Controlador)",
+            "Entidades: OrdenDePreparacion, OrdenDeSeleccion, MercaderiaEnStock, Transportista, Remito, OrdenDeEntrega, Cliente",
+            "Persistencia basada en archivos mediante patrón Repository — sin dependencia de base de datos",
+            "Máquina de estados para el ciclo de vida de las órdenes: Pendiente → EnSeleccion → EnPreparacion → Preparada → Despachada",
+            "Capa de servicios encapsula la lógica de negocio; las Vistas solo invocan Controladores",
+            "Tests unitarios MSTest cubriendo los 5 flujos principales con escenarios de camino feliz e insumos inválidos"
           ]
         },
         "decisions": {
           "title": "Decisiones Clave",
           "points": [
-            "WinForms para desarrollo rápido de UI en contexto de escritorio",
-            "Arquitectura por capas para practicar separación de responsabilidades",
-            "Enfoque test-first para validación del módulo de operaciones"
+            "WinForms elegido según los requerimientos de la materia — foco en metodología de ingeniería de software, no en el stack web",
+            "Patrón MVC aplicado para practicar separación de responsabilidades en contexto de escritorio",
+            "Persistencia en archivos para evitar la complejidad de una base de datos; el patrón Repository mantiene el almacenamiento intercambiable",
+            "Casos de prueba diseñados antes de la implementación para guiar las especificaciones de comportamiento",
+            "Diseño orientado al DFD: Diagrama de Contexto → descomposición DFD1–4 antes de escribir código"
           ]
         },
         "impact": {
           "title": "Resultado",
           "metrics": [
-            { "value": "Open Source", "label": "Disponible en GitHub" },
-            { "value": "Académico", "label": "Proyecto calificado en UBA" }
+            { "value": "Open Source", "label": "Código fuente completo en GitHub" },
+            { "value": "Equipo de 8", "label": "Proyecto académico colaborativo" },
+            { "value": "5 casos de uso", "label": "Flujos completos de almacén implementados" },
+            { "value": "7 fases", "label": "SDLC completo desde DFD hasta casos de prueba" }
           ]
-        }
+        },
+        "courseContext": {
+          "title": "Contexto de la Materia",
+          "course": "Construcción de Aplicaciones Informáticas (CAI)",
+          "courseLabel": "Materia",
+          "institution": "Universidad de Buenos Aires — Facultad de Ciencias Económicas",
+          "institutionLabel": "Institución",
+          "group": "Grupo A",
+          "groupLabel": "Grupo",
+          "semester": "2do Cuatrimestre 2024",
+          "semesterLabel": "Cuatrimestre",
+          "teamSize": "Equipo de 8 integrantes",
+          "teamSizeLabel": "Equipo",
+          "professors": "Alejandro Luis Mendez Cerezuela & Andrés Panitsch",
+          "professorsLabel": "Docentes"
+        },
+        "processTitle": "Proceso de Desarrollo",
+        "phases": [
+          {
+            "step": "01",
+            "title": "Requerimientos y Diagrama de Contexto",
+            "description": "Se definieron los límites del sistema mediante el Diagrama de Contexto (DC), identificando 7 entidades externas: Cliente, Junta Directiva e Inversores, Personal, Transportista, Entidad Bancaria, Proveedor y AFIP. Se documentaron los flujos de información entre cada entidad y el sistema."
+          },
+          {
+            "step": "02",
+            "title": "DFD Nivel 1 — Visión General del Sistema",
+            "description": "El sistema se descompuso en 6 subsistemas de alto nivel: Gestión Operativa, Ventas, Compras e Infraestructura, Finanzas, Recursos Humanos y Planificación. Se identificaron los almacenes de datos compartidos y los flujos entre procesos."
+          },
+          {
+            "step": "03",
+            "title": "DFD Niveles 2 y 3 — Descomposición del Almacén",
+            "description": "Se profundizó en Gestión Operativa: el Nivel 2 la dividió en 'AA Gestión de Almacén' y 'AB Administración y Control'. El Nivel 3 descompuso el proceso de almacén en 4 subprocesos: AAA Despacho, AAB Preparación, AAC Almacenaje y AAD Recepción."
+          },
+          {
+            "step": "04",
+            "title": "DFD Nivel 4 — Detalle del Despacho",
+            "description": "Se descompuso el subproceso de Despacho en operaciones atómicas: AAA.1 Validar identidad del transportista, AAA.2 Confirmar despacho, y AAA.3 Generar y entregar Remito. Se identificaron todos los almacenes de datos accedidos en cada paso."
+          },
+          {
+            "step": "05",
+            "title": "Casos de Uso y Prototipos WinForms",
+            "description": "Se documentaron 5 casos de uso con actores, pre/post-condiciones y flujos normal y alternativo. Se diseñaron los prototipos de pantallas WinForms para cada flujo: Orden de Preparación, Orden de Selección, Baja de Stock, Orden de Entrega y Despacho con generación de Remito."
+          },
+          {
+            "step": "06",
+            "title": "Diagrama de Clases y Secuencias",
+            "description": "Se construyó el diagrama de clases completo con más de 10 entidades de dominio y sus relaciones. Se documentaron 4 diagramas de secuencia rastreando los flujos de mensajes entre UI, Controladores, Servicios y Repositorios para los casos de uso principales. Se formalizó la máquina de estados OPEstado."
+          },
+          {
+            "step": "07",
+            "title": "Implementación y Casos de Prueba",
+            "description": "Se implementó la aplicación WinForms completa en C# siguiendo el diseño MVC de las fases anteriores. Se elaboraron matrices de casos de prueba para los 5 flujos, cubriendo caminos felices, insumos inválidos y condiciones de borde. La entrega final incluyó código fuente, ejecutable y documentación completa."
+          }
+        ],
+        "systemTitle": "Aspectos Destacados del Diseño",
+        "systemPoints": [
+          "El Diagrama de Contexto conecta 7 entidades externas mediante flujos de información bien definidos",
+          "La jerarquía DFD abarca 4 niveles — desde la visión general hasta las operaciones atómicas de despacho",
+          "El ciclo de vida de las órdenes se impone como máquina de estados: Pendiente → EnSeleccion → EnPreparacion → Preparada → Despachada",
+          "El patrón Repository abstrae el almacenamiento en archivos, manteniendo la lógica de dominio independiente de la persistencia",
+          "La arquitectura MVC separa las vistas WinForms de las reglas de negocio — los Controladores median todas las interacciones",
+          "El diagrama Llamado-Retorno documenta las dependencias inter-módulo de la aplicación completa"
+        ],
+        "useCasesTitle": "Casos de Uso Implementados",
+        "useCases": [
+          {
+            "actor": "Asistente de Operaciones",
+            "title": "Orden de Preparación",
+            "description": "Registrar una nueva orden de preparación, seleccionar la mercadería requerida del stock y asignar un transportista para el envío."
+          },
+          {
+            "actor": "Jefe de Preparación",
+            "title": "Orden de Selección",
+            "description": "Filtrar las órdenes de preparación pendientes, validar su disponibilidad y generar una orden de selección que agrupa los ítems por ubicación en el depósito."
+          },
+          {
+            "actor": "Jefe de Selección",
+            "title": "Baja de Stock",
+            "description": "Confirmar que los ítems seleccionados fueron físicamente retirados de las estanterías, reducir las cantidades en stock y avanzar la orden de preparación al estado 'En Preparación'."
+          },
+          {
+            "actor": "Empaquetador",
+            "title": "Orden de Entrega",
+            "description": "Confirmar que la orden fue completamente empaquetada y está lista para despacho, transitando al estado 'Preparada'."
+          },
+          {
+            "actor": "Jefe de Despacho",
+            "title": "Despacho y Generación de Remito",
+            "description": "Validar la identidad del transportista, confirmar la entrega física del envío, marcar la orden como 'Despachada' y generar e imprimir automáticamente el Remito."
+          }
+        ]
       }
     }
   }
