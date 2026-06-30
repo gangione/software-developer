@@ -122,6 +122,19 @@ export default function Experience() {
                         >
                           {t(`roles.${exp.key}.company`)}
                         </a>
+
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {(t.raw(`roles.${exp.key}.tags`) as string[]).map(
+                            (tag: string) => (
+                              <span
+                                key={tag}
+                                className="px-2.5 py-1 text-xs font-mono text-accent-blue-light bg-accent-blue/10 rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ),
+                          )}
+                        </div>
                       </div>
                       <span className="shrink-0 text-xs text-muted font-mono bg-cosmic-800 px-3 py-1 rounded-full">
                         {t(`roles.${exp.key}.period`)}
@@ -131,19 +144,6 @@ export default function Experience() {
                     <p className="mt-4 text-sm text-muted leading-relaxed">
                       {t(`roles.${exp.key}.description`)}
                     </p>
-
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {(t.raw(`roles.${exp.key}.tags`) as string[]).map(
-                        (tag: string) => (
-                          <span
-                            key={tag}
-                            className="px-2.5 py-1 text-xs font-mono text-accent-blue-light bg-accent-blue/10 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ),
-                      )}
-                    </div>
                   </div>
                 </div>
               </motion.div>
