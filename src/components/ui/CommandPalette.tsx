@@ -256,8 +256,8 @@ export default function CommandPalette({ shortcutMedia }: CommandPaletteProps) {
           <path d="m6 8-4 4 4 4" />
           <path d="m14.5 4-5 16" />
         </svg>
-        <span className="hidden lg:inline">{t("triggerLabel")}</span>
-        <kbd className="hidden rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-muted xl:inline">
+        <span className="hidden 2xl:inline">{t("triggerLabel")}</span>
+        <kbd className="hidden rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-muted 2xl:inline">
           {t("shortcut")}
         </kbd>
       </button>

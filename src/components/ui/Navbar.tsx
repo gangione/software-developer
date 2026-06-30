@@ -54,8 +54,8 @@ export default function Navbar() {
           : "border-b border-transparent bg-cosmic-900/35 backdrop-blur-sm"
       }`}
     >
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-3 xl:grid xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-3">
+      <nav className="mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between gap-3 xl:grid xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-6">
           <Link href="/" className="group flex shrink-0 items-center gap-2">
             <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full">
               <Image
@@ -72,14 +72,14 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden min-w-0 items-center justify-center gap-0.5 overflow-hidden xl:flex 2xl:gap-1">
+          <div className="hidden min-w-0 items-center justify-center gap-1 px-6 min-[1800px]:flex">
             {anchorItems.map(({ key, href, command }) =>
               isShell ? (
                 <button
                   key={key}
                   type="button"
                   onClick={() => runShellCommand(command)}
-                  className="flex h-11 w-[5.7rem] flex-none items-center justify-center rounded-lg px-1.5 text-center font-mono text-[12px] leading-tight text-muted transition-colors hover:bg-white/5 hover:text-foreground 2xl:h-9 2xl:w-auto 2xl:whitespace-nowrap 2xl:px-3 2xl:text-sm 2xl:leading-none"
+                  className="flex h-9 flex-none items-center justify-center whitespace-nowrap rounded-lg px-3 text-center font-mono text-sm leading-none text-muted transition-colors hover:bg-white/5 hover:text-foreground"
                 >
                   {command}
                 </button>
@@ -87,7 +87,7 @@ export default function Navbar() {
                 <Link
                   key={key}
                   href={href}
-                  className="flex h-11 w-[5.7rem] flex-none items-center justify-center rounded-lg px-1.5 text-center font-mono text-[12px] leading-tight text-muted transition-colors hover:bg-white/5 hover:text-foreground 2xl:h-9 2xl:w-auto 2xl:whitespace-nowrap 2xl:px-3 2xl:text-sm 2xl:leading-none"
+                  className="flex h-9 flex-none items-center justify-center whitespace-nowrap rounded-lg px-3 text-center font-mono text-sm leading-none text-muted transition-colors hover:bg-white/5 hover:text-foreground"
                 >
                   {t(key)}
                 </Link>
@@ -104,8 +104,8 @@ export default function Navbar() {
             ))} */}
           </div>
 
-          <div className="hidden shrink-0 items-center gap-1.5 xl:flex">
-            <CommandPalette shortcutMedia="(min-width: 1280px)" />
+          <div className="hidden shrink-0 items-center gap-1.5 min-[1800px]:flex">
+            <CommandPalette shortcutMedia="(min-width: 1800px)" />
             <div className="border-l border-white/10 pl-2">
               <LanguageSwitcher />
             </div>
@@ -113,8 +113,11 @@ export default function Navbar() {
           </div>
 
           {/* Mobile toggle */}
-          <div className="flex items-center gap-2 xl:hidden">
-            <CommandPalette shortcutMedia="(max-width: 1279px)" />
+          <div className="flex items-center gap-2 xl:col-start-3 xl:justify-self-end min-[1800px]:hidden">
+            <CommandPalette shortcutMedia="(max-width: 1799px)" />
+            <div className="hidden sm:block">
+              <LanguageSwitcher />
+            </div>
             <ModeToggle />
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -148,7 +151,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="border-b border-white/10 bg-cosmic-900/95 backdrop-blur-xl xl:hidden"
+            className="border-b border-white/10 bg-cosmic-900/95 backdrop-blur-xl min-[1800px]:hidden"
           >
             <div className="px-4 py-4 space-y-1">
               <div className="mb-3">

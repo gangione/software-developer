@@ -4,9 +4,12 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { projects } from "@/data/projects";
+import { routing } from "@/i18n/routing";
 
 export async function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return routing.locales.flatMap((locale) =>
+    projects.map((project) => ({ locale, slug: project.slug })),
+  );
 }
 
 export async function generateMetadata({
