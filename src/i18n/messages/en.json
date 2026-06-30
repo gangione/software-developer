@@ -226,6 +226,9 @@
   "footer": {
     "builtWith": "Built with Next.js, Three.js & passion for knowledge"
   },
+  "scrollToTop": {
+    "label": "Back to top"
+  },
   "commandPalette": {
     "title": "Global search",
     "triggerLabel": "Search",

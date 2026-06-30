@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 import { usePortfolioMode } from "@/components/ui/PortfolioModeProvider";
 
 export default function PortfolioChrome({ children }: { children: ReactNode }) {
@@ -13,7 +14,12 @@ export default function PortfolioChrome({ children }: { children: ReactNode }) {
     <>
       <Navbar />
       <main className="flex-1">{children}</main>
-      {isVisual && <Footer />}
+      {isVisual && (
+        <>
+          <ScrollToTopButton />
+          <Footer />
+        </>
+      )}
     </>
   );
 }
