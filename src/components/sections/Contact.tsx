@@ -12,13 +12,14 @@ export default function Contact() {
     <SectionWrapper id="contact">
       <SectionHeading title={t("title")} subtitle={t("subtitle")} />
 
-      <div className="max-w-2xl mx-auto text-center">
+      <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg border border-white/10 bg-surface px-6 py-10 text-center shadow-2xl shadow-accent-blue/10 backdrop-blur-2xl sm:px-10 lg:px-14">
+        <div className="pointer-events-none absolute inset-0 bg-cosmic-900/35" />
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-muted text-lg leading-relaxed"
+          className="relative mx-auto max-w-2xl text-lg leading-relaxed text-foreground"
         >
           {t("description")}
         </motion.p>
@@ -28,11 +29,11 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-10"
+          className="relative mt-10"
         >
           <a
             href="mailto:angionegabriel87@gmail.com"
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-accent-blue/10 border border-accent-blue/30 hover:bg-accent-blue/20 hover:border-accent-blue/50 transition-all"
+            className="group inline-flex max-w-full items-center gap-3 rounded-lg border border-accent-blue/30 bg-accent-blue/10 px-5 py-4 transition-all hover:border-accent-blue/50 hover:bg-accent-blue/20 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 focus:ring-offset-2 focus:ring-offset-background sm:px-8"
           >
             <svg
               width="20"
@@ -46,7 +47,7 @@ export default function Contact() {
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
               <polyline points="22,6 12,13 2,6" />
             </svg>
-            <span className="text-accent-blue-light font-medium">
+            <span className="break-all font-medium text-accent-blue-light sm:break-normal">
               angionegabriel87@gmail.com
             </span>
           </a>
@@ -58,7 +59,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8"
+          className="relative mt-8"
         >
           <p className="text-sm text-muted mb-4">{t("socialLinks")}</p>
           <div className="flex items-center justify-center gap-4">
@@ -66,7 +67,7 @@ export default function Contact() {
               href="https://github.com/gangione"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 rounded-xl bg-surface/50 border border-white/5 hover:border-accent-blue/20 flex items-center justify-center text-muted hover:text-foreground transition-all"
+              className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-cosmic-900/45 text-muted transition-all hover:border-accent-blue/30 hover:bg-accent-blue/10 hover:text-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 focus:ring-offset-2 focus:ring-offset-background"
               aria-label="GitHub"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -77,7 +78,7 @@ export default function Contact() {
               href="https://www.linkedin.com/in/gabriel-angione/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 rounded-xl bg-surface/50 border border-white/5 hover:border-accent-blue/20 flex items-center justify-center text-muted hover:text-foreground transition-all"
+              className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-cosmic-900/45 text-muted transition-all hover:border-accent-blue/30 hover:bg-accent-blue/10 hover:text-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 focus:ring-offset-2 focus:ring-offset-background"
               aria-label="LinkedIn"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -93,7 +94,7 @@ export default function Contact() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-6 text-sm text-muted/60 flex items-center justify-center gap-2"
+          className="relative mt-6 flex items-center justify-center gap-2 text-sm text-muted"
         >
           <svg
             width="14"

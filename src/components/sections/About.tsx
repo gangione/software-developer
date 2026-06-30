@@ -84,6 +84,35 @@ export default function About() {
               {t(key)}
             </motion.p>
           ))}
+
+          <motion.a
+            href="/Gabriel_Angione_CV_2026.pdf"
+            download
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="group inline-flex items-center gap-3 rounded-full border border-accent-blue/30 bg-accent-blue/10 px-5 py-3 text-sm font-medium text-accent-blue-light transition-all hover:border-accent-blue/60 hover:bg-accent-blue/20 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 focus:ring-offset-2 focus:ring-offset-background"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-blue/15 text-accent-blue-light transition-transform group-hover:-translate-y-0.5">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <path d="M7 10l5 5 5-5" />
+                <path d="M12 15V3" />
+              </svg>
+            </span>
+            {t("downloadCv")}
+          </motion.a>
         </div>
 
         {/* Stats sidebar */}

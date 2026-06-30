@@ -10,7 +10,12 @@ export default function LanguageSwitcher() {
 
   const toggleLocale = () => {
     const next = locale === "en" ? "es" : "en";
-    router.replace(pathname, { locale: next });
+    const suffix =
+      typeof window === "undefined"
+        ? ""
+        : `${window.location.search}${window.location.hash}`;
+
+    router.replace(`${pathname}${suffix}`, { locale: next });
   };
 
   return (

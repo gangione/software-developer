@@ -15,7 +15,7 @@ export default function Footer() {
               GA
             </span>
             <span className="text-sm text-muted">
-              &copy; {year} Gabriel Angione. {t("rights")}
+              &copy; {year} Gabriel Angione.
             </span>
           </div>
 

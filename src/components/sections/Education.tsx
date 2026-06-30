@@ -5,25 +5,103 @@ import { motion } from "framer-motion";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeading from "@/components/ui/SectionHeading";
 
-const educationItems = ["uba", "bachiller", "udemy"] as const;
+const educationItems = ["uba", "udemy", "bachiller"] as const;
+type EducationItem = (typeof educationItems)[number];
 
-const educationIcons: Record<string, React.ReactNode> = {
-  uba: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
-    </svg>
-  ),
-  bachiller: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-    </svg>
-  ),
-  udemy: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="8" r="6" /><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
-    </svg>
-  ),
+const linkedItems = new Set<EducationItem>(["uba", "udemy"]);
+
+const itemStyles: Record<
+  EducationItem,
+  {
+    marker: string;
+    shell: string;
+    icon: string;
+    badge: string;
+    size: string;
+  }
+> = {
+  uba: {
+    marker: "bg-accent-gold shadow-[0_0_24px_rgba(245,158,11,0.45)]",
+    shell:
+      "lg:row-span-2 border-accent-gold/30 bg-[linear-gradient(135deg,rgba(245,158,11,0.16),rgba(15,15,45,0.78)_42%,rgba(59,130,246,0.11))]",
+    icon: "border-accent-gold/30 bg-accent-gold/10 text-accent-gold",
+    badge: "border-accent-gold/30 bg-accent-gold/10 text-accent-gold-light",
+    size: "p-6 sm:p-8",
+  },
+  udemy: {
+    marker: "bg-accent-purple shadow-[0_0_20px_rgba(139,92,246,0.38)]",
+    shell:
+      "border-accent-purple/25 bg-[linear-gradient(135deg,rgba(139,92,246,0.16),rgba(15,15,45,0.72))]",
+    icon: "border-accent-purple/30 bg-accent-purple/10 text-accent-purple",
+    badge: "border-accent-purple/30 bg-accent-purple/10 text-accent-purple",
+    size: "p-6",
+  },
+  bachiller: {
+    marker: "bg-muted/80",
+    shell: "border-white/10 bg-surface/35 opacity-75",
+    icon: "border-white/10 bg-white/5 text-muted",
+    badge: "border-white/10 bg-white/5 text-muted",
+    size: "p-5",
+  },
 };
+
+function EducationIcon({ item }: { item: EducationItem }) {
+  if (item === "uba") {
+    return (
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M22 10v6" />
+        <path d="M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
+      </svg>
+    );
+  }
+
+  if (item === "udemy") {
+    return (
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="8" r="6" />
+        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+  );
+}
 
 export default function Education() {
   const t = useTranslations("education");
@@ -32,43 +110,107 @@ export default function Education() {
     <SectionWrapper id="education">
       <SectionHeading title={t("title")} subtitle={t("subtitle")} />
 
-      <div className="grid md:grid-cols-3 gap-6">
-        {educationItems.map((item, index) => (
-          <motion.div
-            key={item}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.15 }}
-            className="group p-6 rounded-2xl bg-surface/50 border border-white/5 hover:border-accent-gold/20 transition-all backdrop-blur-sm"
-          >
-            {/* Icon */}
-            <div className="w-12 h-12 rounded-xl bg-accent-gold/10 border border-accent-gold/20 flex items-center justify-center text-accent-gold mb-4">
-              {educationIcons[item]}
-            </div>
+      <div className="relative mx-auto max-w-6xl">
+        <div className="absolute left-5 top-8 bottom-8 hidden w-px bg-gradient-to-b from-accent-gold via-accent-purple to-white/10 md:block" />
 
-            {/* Status badge */}
-            <span className="inline-block px-2.5 py-0.5 text-[10px] font-mono text-accent-gold bg-accent-gold/10 rounded-full mb-3">
-              {t(`items.${item}.status`)}
-            </span>
+        <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+          {educationItems.map((item, index) => {
+            const style = itemStyles[item];
+            const isPrimary = item === "uba";
+            const hasLink = linkedItems.has(item);
 
-            <h3 className="text-base font-semibold text-foreground leading-tight">
-              {t(`items.${item}.title`)}
-            </h3>
+            const content = (
+              <>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <span
+                      className={`hidden h-3 w-3 rounded-full md:block ${style.marker}`}
+                    />
+                    <span
+                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border ${style.icon}`}
+                    >
+                      <EducationIcon item={item} />
+                    </span>
+                  </div>
 
-            <p className="mt-1 text-sm text-accent-blue">
-              {t(`items.${item}.institution`)}
-            </p>
+                  <span
+                    className={`rounded-full border px-3 py-1 text-[11px] font-mono uppercase tracking-[0.18em] ${style.badge}`}
+                  >
+                    {t(`items.${item}.status`)}
+                  </span>
+                </div>
 
-            <p className="mt-1 text-xs text-muted font-mono">
-              {t(`items.${item}.period`)}
-            </p>
+                <div className={isPrimary ? "mt-8" : "mt-5"}>
+                  <p className="font-mono text-xs text-accent-blue-light">
+                    {t(`items.${item}.period`)}
+                  </p>
+                  <h3
+                    className={`mt-3 font-semibold leading-tight text-foreground ${
+                      isPrimary ? "text-2xl sm:text-3xl" : "text-lg"
+                    }`}
+                  >
+                    {t(`items.${item}.title`)}
+                  </h3>
+                  <p className="mt-2 text-sm text-accent-blue">
+                    {t(`items.${item}.institution`)}
+                  </p>
+                  <p
+                    className={`mt-4 leading-relaxed text-muted ${
+                      isPrimary ? "text-base" : "text-sm"
+                    }`}
+                  >
+                    {t(`items.${item}.description`)}
+                  </p>
+                </div>
 
-            <p className="mt-3 text-sm text-muted leading-relaxed">
-              {t(`items.${item}.description`)}
-            </p>
-          </motion.div>
-        ))}
+                {hasLink && (
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent-gold-light transition-colors group-hover:text-accent-gold">
+                    {t(`items.${item}.cta`)}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      className="transition-transform group-hover:translate-x-1"
+                    >
+                      <path d="M7 17 17 7" />
+                      <path d="M7 7h10v10" />
+                    </svg>
+                  </span>
+                )}
+              </>
+            );
+
+            return (
+              <motion.article
+                key={item}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.12 }}
+                className={`group relative rounded-lg border backdrop-blur-sm transition-all hover:-translate-y-1 ${style.shell} ${style.size}`}
+              >
+                {hasLink ? (
+                  <a
+                    href={t(`items.${item}.href`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block focus:outline-none focus:ring-2 focus:ring-accent-gold/50 focus:ring-offset-2 focus:ring-offset-background rounded-lg"
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  content
+                )}
+              </motion.article>
+            );
+          })}
+        </div>
       </div>
     </SectionWrapper>
   );

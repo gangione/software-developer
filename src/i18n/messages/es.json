@@ -17,7 +17,7 @@
     "greeting": "Hola, soy",
     "name": "Gabriel Angione",
     "role": "Arquitecto de Software & Builder",
-    "tagline": "Diseño sistemas, no solo software. Construyo conocimiento en arquitectura escalable y productos potenciados por IA.",
+    "tagline": "Diseño sistemas, no solo software. Convierto dominios complejos en productos claros, escalables y preparados para crecer.",
     "cta": {
       "projects": "Ver Proyectos",
       "contact": "Contacto"
@@ -26,14 +26,15 @@
   "about": {
     "title": "Sobre Mí",
     "subtitle": "El camino del conocimiento",
-    "p1": "Soy un Arquitecto de Software de Buenos Aires, Argentina, con casi una década de experiencia abarcando todo el espectro IT — desde soporte técnico y administración de sistemas hasta ingeniería de redes y desarrollo full-stack. No solo escribo código: modelo dominios, diseño sistemas y construyo software que escala con la organización que sirve.",
+    "p1": "Soy un Arquitecto de Software de Buenos Aires, Argentina, con una década de experiencia abarcando todo el espectro IT — desde soporte técnico y administración de sistemas hasta ingeniería de redes y desarrollo full-stack. No solo escribo código: modelo dominios, diseño sistemas y construyo software que escala con la organización que sirve.",
     "p2": "Actualmente en Tec Solutions, diseño y construyo Web APIs con C# .NET, aplicando principios de arquitectura limpia (DDD, MVC, BFF) y patrones de diseño (CQRS, Mediator, Builder). Trabajo en todo el stack con Angular, React, Node.js, Laravel, y gestiono bases de datos relacionales incluyendo MySQL, Oracle y PostgreSQL.",
     "p3": "Soy el fundador de Track Signe, una plataforma SaaS para verificación y seguimiento inteligente en vía pública usando códigos QR, geolocalización y evidencia fotográfica.",
     "p4": "Mi enfoque actual es el desarrollo impulsado por IA — aprovechando agentes de IA en flujos DDD/SDD, experimentando con herramientas MCP y construyendo interfaces de usuario integradas con IA para máxima eficiencia.",
+    "downloadCv": "Descargar CV",
     "highlight": {
       "years": "10",
       "yearsLabel": "Años de Experiencia",
-      "projects": "15+",
+      "projects": "10+",
       "projectsLabel": "Proyectos Entregados",
       "roles": "5",
       "rolesLabel": "Evoluciones de Carrera"
@@ -182,21 +183,27 @@
         "institution": "Universidad de Buenos Aires — Facultad de Ciencias Económicas",
         "period": "2015 — 2026",
         "status": "Licenciado",
-        "description": "Programa integral que abarca ingeniería de software, bases de datos, redes, seguridad informática, gestión de proyectos, contabilidad, economía y sistemas organizacionales."
+        "description": "Carrera de grado de la Facultad de Ciencias Económicas que integra sistemas, tecnología y gestión organizacional para diseñar soluciones informáticas con mirada de negocio.",
+        "href": "https://economicas.uba.ar/alumnos/sistemas/",
+        "cta": "Ver carrera en UBA"
       },
       "bachiller": {
         "title": "Bachiller en Economía y Administración",
         "institution": "Juan B. Lasalle",
         "period": "Egresado 2014",
         "status": "Completado",
-        "description": "Formación en economía, administración de empresas y principios contables."
+        "description": "Base inicial en economía, administración de empresas y principios contables.",
+        "href": "",
+        "cta": ""
       },
       "udemy": {
         "title": "Certificación Master en PHP, SQL, POO, MVC, Laravel, Symfony y WordPress",
         "institution": "Udemy",
         "period": "2022",
         "status": "Certificado",
-        "description": "Formación integral full-stack desde cero hasta nivel avanzado. Dominio de PHP con programación orientada a objetos y patrón MVC. Bases de datos relacionales con SQL y MySQL. Desarrollo de aplicaciones web completas. Maquetación web y buenas prácticas."
+        "description": "Credencial full-stack enfocada en PHP moderno, SQL, POO, MVC, Laravel, Symfony, WordPress y construcción de aplicaciones web completas.",
+        "href": "https://www.udemy.com/certificate/UC-3fb6e2d1-82ba-4d7b-88bd-c983d7c5e3c5/",
+        "cta": "Ver certificado"
       }
     }
   },
@@ -217,8 +224,169 @@
     "socialLinks": "Encontrame en"
   },
   "footer": {
-    "rights": "Todos los derechos reservados.",
     "builtWith": "Construido con Next.js, Three.js y pasión por el conocimiento"
+  },
+  "commandPalette": {
+    "title": "Búsqueda global",
+    "triggerLabel": "Buscar",
+    "closeLabel": "Cerrar búsqueda",
+    "shortcut": "Ctrl K",
+    "placeholder": "Buscar sección o acción...",
+    "noResults": "No hay comandos para esa búsqueda.",
+    "commands": {
+      "about": {
+        "label": "Ir a Sobre mí",
+        "description": "Perfil profesional, enfoque y contexto"
+      },
+      "thinking": {
+        "label": "Ir a Cómo Pienso",
+        "description": "Modelos mentales y forma de construir sistemas"
+      },
+      "experience": {
+        "label": "Ir a Experiencia",
+        "description": "Trayectoria profesional y roles principales"
+      },
+      "projects": {
+        "label": "Ir a Proyectos",
+        "description": "Productos, casos y trabajos destacados"
+      },
+      "techStack": {
+        "label": "Ir a Tecnologías",
+        "description": "Herramientas, lenguajes y plataformas"
+      },
+      "education": {
+        "label": "Ir a Educación",
+        "description": "Formación universitaria y certificaciones"
+      },
+      "contact": {
+        "label": "Ir a Contacto",
+        "description": "Canales para conversar o trabajar juntos"
+      },
+      "downloadCv": {
+        "label": "Descargar CV",
+        "description": "Obtener el CV profesional en PDF"
+      }
+    }
+  },
+  "shell": {
+    "inputLabel": "Comando del modo shell",
+    "hint": "Escribí /help para explorar el portfolio",
+    "toggle": {
+      "label": "Cambiar modo de visualización",
+      "visual": "UI",
+      "shell": "Shell"
+    },
+    "hero": {
+      "headline": "Diseño y construyo sistemas,\nno solo software.",
+      "summary": "Convierto dominios complejos en productos claros, escalables y mantenibles: del modelo del negocio a la arquitectura, del prototipo al sistema en producción.",
+      "meta": [
+        "Buenos Aires, Argentina",
+        "10+ años construyendo software"
+      ]
+    },
+    "errors": {
+      "unknown": "Comando no reconocido: {command}. Escribí /help para ver opciones."
+    },
+    "cards": {
+      "aboutMe": {
+        "nav": "About",
+        "description": "Quién soy, qué me mueve y cómo pienso."
+      },
+      "projects": {
+        "nav": "Projects",
+        "description": "Cosas que construí y problemas que disfruto resolver."
+      },
+      "stack": {
+        "nav": "Tech Stack",
+        "description": "Tecnologías y herramientas que uso para crear sistemas."
+      },
+      "experience": {
+        "nav": "Experience",
+        "description": "Empresas, roles e impacto a lo largo del tiempo."
+      },
+      "education": {
+        "nav": "Education",
+        "description": "Formación académica y certificaciones."
+      },
+      "contact": {
+        "nav": "Contact",
+        "description": "Construyamos algo grande juntos."
+      }
+    },
+    "commands": {
+      "help": {
+        "output": [
+          "Available commands:",
+          "/about-me     - Sobre mí y mis principios",
+          "/projects     - Proyectos seleccionados",
+          "/stack        - Tecnologías con las que trabajo",
+          "/experience   - Experiencia profesional",
+          "/education    - Educación y certificaciones",
+          "/contact      - Contacto",
+          "/cv           - Descargar CV en PDF",
+          "/clear        - Limpiar la terminal",
+          "/gui          - Volver al modo visual"
+        ]
+      },
+      "aboutMe": {
+        "output": [
+          "> Arquitecto de Software de Buenos Aires, Argentina.",
+          "Modelo dominios, diseño sistemas y construyo software que escala con la organización.",
+          "Actualmente enfocado en arquitectura limpia, DDD, CQRS, agentes de IA y tooling para equipos de ingeniería."
+        ]
+      },
+      "projects": {
+        "output": [
+          "> Track Signe - SaaS para verificación y registro inteligente en vía pública.",
+          "> GGM Fitness - Plataforma para un centro de entrenamiento de calistenia.",
+          "> Cauciones Digital - Plataforma digital para productores y asegurados.",
+          "> Pampazon - WMS académico construido en C# WinForms durante la UBA."
+        ]
+      },
+      "stack": {
+        "output": [
+          "> Backend: C#/.NET, Node.js, Laravel, Express.",
+          "> Frontend: Angular, React, React Native, Next.js.",
+          "> Data: PostgreSQL, MySQL, Oracle, SQL Server.",
+          "> Architecture: DDD, Clean Architecture, CQRS, Mediator, BFF.",
+          "> AI: agentes, MCP, workflows de desarrollo asistido."
+        ]
+      },
+      "experience": {
+        "output": [
+          "> Tec Solutions - Líder Técnico, arquitectura, roadmap técnico y gestión de equipo.",
+          "> Tec Solutions - Software Developer, APIs .NET, Angular, React, Laravel y Docker.",
+          "> Aseguradores de Cauciones - Analista Programador y Systems Administrator.",
+          "Evolución completa: soporte, infraestructura, redes, desarrollo, arquitectura y liderazgo."
+        ]
+      },
+      "education": {
+        "output": [
+          "> Licenciado en Sistemas de Información de las Organizaciones - UBA FCE.",
+          "> Certificación Master en PHP, SQL, POO, MVC, Laravel, Symfony y WordPress - Udemy.",
+          "> Bachiller en Economía y Administración - Juan B. Lasalle."
+        ]
+      },
+      "contact": {
+        "output": [
+          "> Email: angionegabriel87@gmail.com",
+          "> GitHub: github.com/gangione",
+          "> LinkedIn: linkedin.com/in/gabriel-angione",
+          "Siempre abierto a proyectos, ideas técnicas y oportunidades para construir."
+        ]
+      },
+      "cv": {
+        "output": [
+          "> Descargando Gabriel_Angione_CV_2026.pdf..."
+        ]
+      },
+      "gui": {
+        "output": [
+          "> Saliendo del modo shell...",
+          "Volviendo a la experiencia visual."
+        ]
+      }
+    }
   },
   "thinking": {
     "title": "Cómo Pienso",

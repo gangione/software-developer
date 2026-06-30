@@ -4,8 +4,8 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
-import Navbar from "@/components/ui/Navbar";
-import Footer from "@/components/ui/Footer";
+import PortfolioChrome from "@/components/ui/PortfolioChrome";
+import { PortfolioModeProvider } from "@/components/ui/PortfolioModeProvider";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -125,9 +125,9 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <PortfolioModeProvider>
+            <PortfolioChrome>{children}</PortfolioChrome>
+          </PortfolioModeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

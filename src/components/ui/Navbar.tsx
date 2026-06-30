@@ -5,16 +5,19 @@ import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import CommandPalette from "./CommandPalette";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ModeToggle from "./ModeToggle";
+import { usePortfolioMode } from "./PortfolioModeProvider";
 
 const anchorItems = [
-  { key: "about", href: "/#about" },
-  { key: "thinking", href: "/#thinking" },
-  { key: "experience", href: "/#experience" },
-  { key: "projects", href: "/#projects" },
-  { key: "techStack", href: "/#tech-stack" },
-  { key: "education", href: "/#education" },
-  { key: "contact", href: "/#contact" },
+  { key: "about", href: "/#about", command: "/about-me" },
+  { key: "thinking", href: "/#thinking", command: "help" },
+  { key: "experience", href: "/#experience", command: "/experience" },
+  { key: "projects", href: "/#projects", command: "/projects" },
+  { key: "techStack", href: "/#tech-stack", command: "/stack" },
+  { key: "education", href: "/#education", command: "/education" },
+  { key: "contact", href: "/#contact", command: "/contact" },
 ];
 
 // const routeItems = [
@@ -23,8 +26,10 @@ const anchorItems = [
 
 export default function Navbar() {
   const t = useTranslations("nav");
+  const { mode } = usePortfolioMode();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isShell = mode === "shell";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -32,47 +37,62 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  function runShellCommand(command: string) {
+    window.dispatchEvent(
+      new CustomEvent("portfolio-shell-command", { detail: command })
+    );
+  }
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-cosmic-900/80 backdrop-blur-xl border-b border-white/5"
-          : "bg-transparent"
+        scrolled || isShell
+          ? "border-b border-white/10 bg-cosmic-900/80 backdrop-blur-xl"
+          : "border-b border-transparent bg-cosmic-900/35 backdrop-blur-sm"
       }`}
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
+        <div className="flex h-16 items-center justify-between gap-3 xl:grid xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-3">
+          <Link href="/" className="group flex shrink-0 items-center gap-2">
+            <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full">
               <Image
                 src="/images/avatar.png"
                 alt="Gabriel Angione"
                 width={32}
                 height={32}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
                 priority
               />
             </div>
-            <span className="sm:block text-sm text-muted group-hover:text-foreground transition-colors">
+            <span className="text-sm text-muted transition-colors group-hover:text-foreground sm:block">
               gangione.dev
             </span>
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {anchorItems.map(({ key, href }) => (
-              <Link
-                key={key}
-                href={href}
-                className="px-3 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/5"
-              >
-                {t(key)}
-              </Link>
-            ))}
+          <div className="hidden min-w-0 items-center justify-center gap-0.5 overflow-hidden xl:flex 2xl:gap-1">
+            {anchorItems.map(({ key, href, command }) =>
+              isShell ? (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => runShellCommand(command)}
+                  className="flex h-11 w-[5.7rem] flex-none items-center justify-center rounded-lg px-1.5 text-center font-mono text-[12px] leading-tight text-muted transition-colors hover:bg-white/5 hover:text-foreground 2xl:h-9 2xl:w-auto 2xl:whitespace-nowrap 2xl:px-3 2xl:text-sm 2xl:leading-none"
+                >
+                  {command}
+                </button>
+              ) : (
+                <Link
+                  key={key}
+                  href={href}
+                  className="flex h-11 w-[5.7rem] flex-none items-center justify-center rounded-lg px-1.5 text-center font-mono text-[12px] leading-tight text-muted transition-colors hover:bg-white/5 hover:text-foreground 2xl:h-9 2xl:w-auto 2xl:whitespace-nowrap 2xl:px-3 2xl:text-sm 2xl:leading-none"
+                >
+                  {t(key)}
+                </Link>
+              )
+            )}
             {/* {routeItems.map(({ key, href }) => (
               <Link
                 key={key}
@@ -82,14 +102,20 @@ export default function Navbar() {
                 {t(key)}
               </Link>
             ))} */}
-            <div className="ml-3 pl-3 border-l border-white/10">
+          </div>
+
+          <div className="hidden shrink-0 items-center gap-1.5 xl:flex">
+            <CommandPalette shortcutMedia="(min-width: 1280px)" />
+            <div className="border-l border-white/10 pl-2">
               <LanguageSwitcher />
             </div>
+            <ModeToggle className="ml-1" />
           </div>
 
           {/* Mobile toggle */}
-          <div className="flex items-center gap-3 md:hidden">
-            <LanguageSwitcher />
+          <div className="flex items-center gap-2 xl:hidden">
+            <CommandPalette shortcutMedia="(max-width: 1279px)" />
+            <ModeToggle />
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="p-2 text-muted hover:text-foreground"
@@ -122,19 +148,36 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden bg-cosmic-900/95 backdrop-blur-xl border-b border-white/5"
+            className="border-b border-white/10 bg-cosmic-900/95 backdrop-blur-xl xl:hidden"
           >
             <div className="px-4 py-4 space-y-1">
-              {anchorItems.map(({ key, href }) => (
-                <Link
-                  key={key}
-                  href={href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2 text-sm text-muted hover:text-foreground rounded-lg hover:bg-white/5"
-                >
-                  {t(key)}
-                </Link>
-              ))}
+              <div className="mb-3">
+                <LanguageSwitcher />
+              </div>
+              {anchorItems.map(({ key, href, command }) =>
+                isShell ? (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => {
+                      runShellCommand(command);
+                      setMobileOpen(false);
+                    }}
+                    className="block w-full rounded-lg px-3 py-2 text-left font-mono text-sm text-muted hover:bg-white/5 hover:text-foreground"
+                  >
+                    {command}
+                  </button>
+                ) : (
+                  <Link
+                    key={key}
+                    href={href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-lg px-3 py-2 font-mono text-sm text-muted hover:bg-white/5 hover:text-foreground"
+                  >
+                    {t(key)}
+                  </Link>
+                )
+              )}
               {/* {routeItems.map(({ key, href }) => (
                 <Link
                   key={key}

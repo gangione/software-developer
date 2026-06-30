@@ -17,7 +17,7 @@
     "greeting": "Hi, I'm",
     "name": "Gabriel Angione",
     "role": "Software Architect & Builder",
-    "tagline": "I design systems, not just software. I build knowledge into scalable architecture and AI-driven products.",
+    "tagline": "I design systems, not just software. I turn complex domains into clear, scalable products built to grow.",
     "cta": {
       "projects": "View Projects",
       "contact": "Get in Touch"
@@ -26,14 +26,15 @@
   "about": {
     "title": "About Me",
     "subtitle": "The journey of knowledge",
-    "p1": "I'm a Software Architect from Buenos Aires, Argentina, with nearly a decade of experience spanning the entire IT spectrum — from tech support and systems administration to network engineering and full-stack development. I don't just write code: I model domains, design systems, and build software that scales with the organization it serves.",
+    "p1": "I'm a Software Architect from Buenos Aires, Argentina, with a decade of experience spanning the entire IT spectrum — from tech support and systems administration to network engineering and full-stack development. I don't just write code: I model domains, design systems, and build software that scales with the organization it serves.",
     "p2": "Currently at Tec Solutions, I architect and build Web APIs with C# .NET, applying clean architecture principles (DDD, MVC, BFF) and design patterns (CQRS, Mediator, Builder). I work across the full stack with Angular, React, Node.js, Laravel, and manage relational databases including MySQL, Oracle, and PostgreSQL.",
     "p3": "I'm the founder of Track Signe, a SaaS platform for intelligent verification and tracking in public spaces using QR codes, geolocation, and photographic evidence.",
     "p4": "My current focus is AI-driven development — leveraging AI agents in DDD/SDD workflows, experimenting with MCP tools, and building AI-integrated user interfaces for maximum efficiency.",
+    "downloadCv": "Download CV",
     "highlight": {
       "years": "10",
       "yearsLabel": "Years of Experience",
-      "projects": "15+",
+      "projects": "10+",
       "projectsLabel": "Projects Delivered",
       "roles": "5",
       "rolesLabel": "Career Evolutions"
@@ -180,23 +181,29 @@
       "uba": {
         "title": "BSc in Information Systems of Organizations",
         "institution": "University of Buenos Aires — Faculty of Economic Sciences",
-        "period": "2015 — Present",
-        "status": "Advanced student — 10 subjects remaining",
-        "description": "Comprehensive program covering software engineering, databases, networks, information security, project management, accounting, economics, and organizational systems."
+        "period": "2015 — 2026",
+        "status": "Graduate",
+        "description": "Degree program from the Faculty of Economic Sciences that combines information systems, technology, and organizational management to design business-aware software solutions.",
+        "href": "https://economicas.uba.ar/alumnos/sistemas/",
+        "cta": "View UBA program"
       },
       "bachiller": {
         "title": "High School Diploma in Economics & Administration",
         "institution": "Juan B. Lasalle",
         "period": "Graduated 2014",
         "status": "Completed",
-        "description": "Foundation in economics, business administration, and accounting principles."
+        "description": "Early foundation in economics, business administration, and accounting principles.",
+        "href": "",
+        "cta": ""
       },
       "udemy": {
         "title": "Master Certification in PHP, SQL, OOP, MVC, Laravel, Symfony & WordPress",
         "institution": "Udemy",
         "period": "2022",
         "status": "Certified",
-        "description": "Comprehensive full-stack training from zero to advanced level. Mastery of PHP with object-oriented programming and MVC pattern. Relational databases with SQL and MySQL. Development of complete web applications. Web layout and best practices."
+        "description": "Full-stack credential focused on modern PHP, SQL, OOP, MVC, Laravel, Symfony, WordPress, and complete web application development.",
+        "href": "https://www.udemy.com/certificate/UC-3fb6e2d1-82ba-4d7b-88bd-c983d7c5e3c5/",
+        "cta": "View certificate"
       }
     }
   },
@@ -217,8 +224,169 @@
     "socialLinks": "Find me on"
   },
   "footer": {
-    "rights": "All rights reserved.",
     "builtWith": "Built with Next.js, Three.js & passion for knowledge"
+  },
+  "commandPalette": {
+    "title": "Global search",
+    "triggerLabel": "Search",
+    "closeLabel": "Close search",
+    "shortcut": "Ctrl K",
+    "placeholder": "Search section or action...",
+    "noResults": "No commands match that search.",
+    "commands": {
+      "about": {
+        "label": "Go to About",
+        "description": "Professional profile, focus, and context"
+      },
+      "thinking": {
+        "label": "Go to How I Think",
+        "description": "Mental models and system-building approach"
+      },
+      "experience": {
+        "label": "Go to Experience",
+        "description": "Career path and key roles"
+      },
+      "projects": {
+        "label": "Go to Projects",
+        "description": "Products, cases, and selected work"
+      },
+      "techStack": {
+        "label": "Go to Tech Stack",
+        "description": "Tools, languages, and platforms"
+      },
+      "education": {
+        "label": "Go to Education",
+        "description": "University degree and certifications"
+      },
+      "contact": {
+        "label": "Go to Contact",
+        "description": "Channels to talk or work together"
+      },
+      "downloadCv": {
+        "label": "Download CV",
+        "description": "Get the professional CV as a PDF"
+      }
+    }
+  },
+  "shell": {
+    "inputLabel": "Shell mode command",
+    "hint": "Type /help to explore the portfolio",
+    "toggle": {
+      "label": "Change display mode",
+      "visual": "UI",
+      "shell": "Shell"
+    },
+    "hero": {
+      "headline": "I design and build systems,\nnot just software.",
+      "summary": "I turn complex domains into clear, scalable, maintainable products: from business model to architecture, from prototype to production system.",
+      "meta": [
+        "Buenos Aires, Argentina",
+        "10+ years building software"
+      ]
+    },
+    "errors": {
+      "unknown": "Unknown command: {command}. Type /help to see options."
+    },
+    "cards": {
+      "aboutMe": {
+        "nav": "About",
+        "description": "Who I am, what drives me, and how I think."
+      },
+      "projects": {
+        "nav": "Projects",
+        "description": "Things I have built and problems I enjoy solving."
+      },
+      "stack": {
+        "nav": "Tech Stack",
+        "description": "Technologies and tools I use to build systems."
+      },
+      "experience": {
+        "nav": "Experience",
+        "description": "Companies, roles, and impact over time."
+      },
+      "education": {
+        "nav": "Education",
+        "description": "Academic background and certifications."
+      },
+      "contact": {
+        "nav": "Contact",
+        "description": "Let's build something great together."
+      }
+    },
+    "commands": {
+      "help": {
+        "output": [
+          "Available commands:",
+          "/about-me     - About me and my principles",
+          "/projects     - Selected projects",
+          "/stack        - Technologies I work with",
+          "/experience   - Professional experience",
+          "/education    - Education and certifications",
+          "/contact      - Get in touch",
+          "/cv           - Download CV as PDF",
+          "/clear        - Clear the terminal",
+          "/gui          - Switch back to visual mode"
+        ]
+      },
+      "aboutMe": {
+        "output": [
+          "> Software Architect from Buenos Aires, Argentina.",
+          "I model domains, design systems, and build software that scales with the organization it serves.",
+          "Currently focused on clean architecture, DDD, CQRS, AI agents, and engineering team tooling."
+        ]
+      },
+      "projects": {
+        "output": [
+          "> Track Signe - SaaS for intelligent public-space verification and registration.",
+          "> GGM Fitness - Platform for a calisthenics training center.",
+          "> Cauciones Digital - Digital platform for insurance brokers and policyholders.",
+          "> Pampazon - Academic WMS built in C# WinForms at UBA."
+        ]
+      },
+      "stack": {
+        "output": [
+          "> Backend: C#/.NET, Node.js, Laravel, Express.",
+          "> Frontend: Angular, React, React Native, Next.js.",
+          "> Data: PostgreSQL, MySQL, Oracle, SQL Server.",
+          "> Architecture: DDD, Clean Architecture, CQRS, Mediator, BFF.",
+          "> AI: agents, MCP, assisted development workflows."
+        ]
+      },
+      "experience": {
+        "output": [
+          "> Tec Solutions - Technical Leader, architecture, technical roadmap, and team management.",
+          "> Tec Solutions - Software Developer, .NET APIs, Angular, React, Laravel, and Docker.",
+          "> Aseguradores de Cauciones - Programmer Analyst and Systems Administrator.",
+          "Full evolution: support, infrastructure, networking, development, architecture, and leadership."
+        ]
+      },
+      "education": {
+        "output": [
+          "> Graduate in Information Systems of Organizations - UBA FCE.",
+          "> Master Certification in PHP, SQL, OOP, MVC, Laravel, Symfony & WordPress - Udemy.",
+          "> High School Diploma in Economics & Administration - Juan B. Lasalle."
+        ]
+      },
+      "contact": {
+        "output": [
+          "> Email: angionegabriel87@gmail.com",
+          "> GitHub: github.com/gangione",
+          "> LinkedIn: linkedin.com/in/gabriel-angione",
+          "Open to projects, technical ideas, and opportunities to build."
+        ]
+      },
+      "cv": {
+        "output": [
+          "> Downloading Gabriel_Angione_CV_2026.pdf..."
+        ]
+      },
+      "gui": {
+        "output": [
+          "> Leaving shell mode...",
+          "Switching back to the visual experience."
+        ]
+      }
+    }
   },
   "thinking": {
     "title": "How I Think",
